@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:flowable="http://flowable.org/bpmn"
+             targetNamespace="http://www.avalon.com/loan-application">
+
+  <process id="loanApplicationProcess" name="Loan Application Process" isExecutable="true">
+    
+    <startEvent id="startEvent" name="Start Loan Application" flowable:initiator="initiator">
+      <documentation>Start the loan application process</documentation>
+    </startEvent>
+    
+    <sequenceFlow id="flow1" sourceRef="startEvent" targetRef="validateLoanApplication" />
+    
+    <serviceTask id="validateLoanApplication" name="Validate Loan Application" 
+                 flowable:class="com.gspb.avalon.workflow.process.delegate.ValidateLoanApplicationDelegate">
+      <documentation>Validate the loan application data</documentation>
+    </serviceTask>
+    
+    <sequenceFlow id="flow2" sourceRef="validateLoanApplication" targetRef="validationGateway" />
+    
+    <exclusiveGateway id="validationGateway" name="Validation Gateway" />
+    
+    <sequenceFlow id="flow3" sourceRef="validationGateway" targetRef="performKYC">
+      <conditionExpression xsi:type="tFormalExpression">${validationPassed}</conditionExpression>
+    </sequenceFlow>
+    
+    <sequenceFlow id="flow4" sourceRef="validationGateway" targetRef="requestValidationOverride">
+      <conditionExpression xsi:type="tFormalExpression">${!validationPassed}</conditionExpression>
+    </sequenceFlow>
+    
+    <userTask id="requestValidationOverride" name="Request Validation Override" 
+              flowable:assignee="${assignee}" flowable:candidateGroups="managers">
+      <documentation>Request override for validation failures</documentation>
+    </userTask>
+    
+    <sequenceFlow id="flow5" sourceRef="requestValidationOverride" targetRef="overrideGateway" />
+    
+    <exclusiveGateway id="overrideGateway" name="Override Gateway" />
+    
+    <sequenceFlow id="flow6" sourceRef="overrideGateway" targetRef="performKYC">
+      <conditionExpression xsi:type="tFormalExpression">${overrideApproved}</conditionExpression>
+    </sequenceFlow>
+    
+    <sequenceFlow id="flow7" sourceRef="overrideGateway" targetRef="rejectLoanApplication">
+      <conditionExpression xsi:type="tFormalExpression">${!overrideApproved}</conditionExpression>
+    </sequenceFlow>
+    
+    <serviceTask id="performKYC" name="Perform KYC" 
+                 flowable:class="com.gspb.avalon.workflow.process.delegate.PerformKYCDelegate">
+      <documentation>Perform KYC checks on the client</documentation>
+    </serviceTask>
+    
+    <sequenceFlow id="flow8" sourceRef="performKYC" targetRef="kycGateway" />
+    
+    <exclusiveGateway id="kycGateway" name="KYC Gateway" />
+    
+    <sequenceFlow id="flow9" sourceRef="kycGateway" targetRef="valuateCollateral">
+      <conditionExpression xsi:type="tFormalExpression">${kycPassed}</conditionExpression>
+    </sequenceFlow>
+    
+    <sequenceFlow id="flow10" sourceRef="kycGateway" targetRef="requestKYCOverride">
+      <conditionExpression xsi:type="tFormalExpression">${!kycPassed}</conditionExpression>
+    </sequenceFlow>
+    
+    <userTask id="requestKYCOverride" name="Request KYC Override" 
+              flowable:assignee="${assignee}" flowable:candidateGroups="compliance-officers">
+      <documentation>Request override for KYC failures</documentation>
+    </userTask>
+    
+    <sequenceFlow id="flow11" sourceRef="requestKYCOverride" targetRef="kycOverrideGateway" />
+    
+    <exclusiveGateway id="kycOverrideGateway" name="KYC Override Gateway" />
+    
+    <sequenceFlow id="flow12" sourceRef="kycOverrideGateway" targetRef="valuateCollateral">
+      <conditionExpression xsi:type="tFormalExpression">${kycOverrideApproved}</conditionExpression>
+    </sequenceFlow>
+    
+    <sequenceFlow id="flow13" sourceRef="kycOverrideGateway" targetRef="rejectLoanApplication">
+      <conditionExpression xsi:type="tFormalExpression">${!kycOverrideApproved}</conditionExpression>
+    </sequenceFlow>
+    
+    <serviceTask id="valuateCollateral" name="Valuate Collateral" 
+                 flowable:class="com.gspb.avalon.workflow.process.delegate.ValuateCollateralDelegate">
+      <documentation>Valuate the collateral for the loan</documentation>
+    </serviceTask>
+    
+    <sequenceFlow id="flow14" sourceRef="valuateCollateral" targetRef="collateralGateway" />
+    
+    <exclusiveGateway id="collateralGateway" name="Collateral Gateway" />
+    
+    <sequenceFlow id="flow15" sourceRef="collateralGateway" targetRef="approveLoanApplication">
+      <conditionExpression xsi:type="tFormalExpression">${collateralSufficient}</conditionExpression>
+    </sequenceFlow>
+    
+    <sequenceFlow id="flow16" sourceRef="collateralGateway" targetRef="requestCollateralOverride">
+      <conditionExpression xsi:type="tFormalExpression">${!collateralSufficient}</conditionExpression>
+    </sequenceFlow>
+    
+    <userTask id="requestCollateralOverride" name="Request Collateral Override" 
+              flowable:assignee="${assignee}" flowable:candidateGroups="risk-officers">
+      <documentation>Request override for insufficient collateral</documentation>
+    </userTask>
+    
+    <sequenceFlow id="flow17" sourceRef="requestCollateralOverride" targetRef="collateralOverrideGateway" />
+    
+    <exclusiveGateway id="collateralOverrideGateway" name="Collateral Override Gateway" />
+    
+    <sequenceFlow id="flow18" sourceRef="collateralOverrideGateway" targetRef="approveLoanApplication">
+      <conditionExpression xsi:type="tFormalExpression">${collateralOverrideApproved}</conditionExpression>
+    </sequenceFlow>
+    
+    <sequenceFlow id="flow19" sourceRef="collateralOverrideGateway" targetRef="rejectLoanApplication">
+      <conditionExpression xsi:type="tFormalExpression">${!collateralOverrideApproved}</conditionExpression>
+    </sequenceFlow>
+    
+    <serviceTask id="approveLoanApplication" name="Approve Loan Application" 
+                 flowable:class="com.gspb.avalon.workflow.process.delegate.ApproveLoanApplicationDelegate">
+      <documentation>Approve the loan application</documentation>
+    </serviceTask>
+    
+    <sequenceFlow id="flow20" sourceRef="approveLoanApplication" targetRef="generateDocuments" />
+    
+    <serviceTask id="generateDocuments" name="Generate Documents" 
+                 flowable:class="com.gspb.avalon.workflow.process.delegate.GenerateDocumentsDelegate">
+      <documentation>Generate loan documents</documentation>
+    </serviceTask>
+    
+    <sequenceFlow id="flow21" sourceRef="generateDocuments" targetRef="sendForSignature" />
+    
+    <serviceTask id="sendForSignature" name="Send for Signature" 
+                 flowable:class="com.gspb.avalon.workflow.process.delegate.SendForSignatureDelegate">
+      <documentation>Send documents for digital signature</documentation>
+    </serviceTask>
+    
+    <sequenceFlow id="flow22" sourceRef="sendForSignature" targetRef="waitForSignature" />
+    
+    <receiveTask id="waitForSignature" name="Wait for Signature">
+      <documentation>Wait for the client to sign the documents</documentation>
+    </receiveTask>
+    
+    <sequenceFlow id="flow23" sourceRef="waitForSignature" targetRef="signatureGateway" />
+    
+    <exclusiveGateway id="signatureGateway" name="Signature Gateway" />
+    
+    <sequenceFlow id="flow24" sourceRef="signatureGateway" targetRef="disburseLoan">
+      <conditionExpression xsi:type="tFormalExpression">${documentsSigned}</conditionExpression>
+    </sequenceFlow>
+    
+    <sequenceFlow id="flow25" sourceRef="signatureGateway" targetRef="cancelLoanApplication">
+      <conditionExpression xsi:type="tFormalExpression">${!documentsSigned}</conditionExpression>
+    </sequenceFlow>
+    
+    <serviceTask id="disburseLoan" name="Disburse Loan" 
+                 flowable:class="com.gspb.avalon.workflow.process.delegate.DisburseLoanDelegate">
+      <documentation>Disburse the loan amount</documentation>
+    </serviceTask>
+    
+    <sequenceFlow id="flow26" sourceRef="disburseLoan" targetRef="completeLoanApplication" />
+    
+    <serviceTask id="rejectLoanApplication" name="Reject Loan Application" 
+                 flowable:class="com.gspb.avalon.workflow.process.delegate.RejectLoanApplicationDelegate">
+      <documentation>Reject the loan application</documentation>
+    </serviceTask>
+    
+    <sequenceFlow id="flow27" sourceRef="rejectLoanApplication" targetRef="endRejected" />
+    
+    <serviceTask id="cancelLoanApplication" name="Cancel Loan Application" 
+                 flowable:class="com.gspb.avalon.workflow.process.delegate.CancelLoanApplicationDelegate">
+      <documentation>Cancel the loan application</documentation>
+    </serviceTask>
+    
+    <sequenceFlow id="flow28" sourceRef="cancelLoanApplication" targetRef="endCancelled" />
+    
+    <serviceTask id="completeLoanApplication" name="Complete Loan Application" 
+                 flowable:class="com.gspb.avalon.workflow.process.delegate.CompleteLoanApplicationDelegate">
+      <documentation>Complete the loan application</documentation>
+    </serviceTask>
+    
+    <sequenceFlow id="flow29" sourceRef="completeLoanApplication" targetRef="endCompleted" />
+    
+    <endEvent id="endRejected" name="Loan Application Rejected" />
+    
+    <endEvent id="endCancelled" name="Loan Application Cancelled" />
+    
+    <endEvent id="endCompleted" name="Loan Application Completed" />
+    
+  </process>
+</definitions>

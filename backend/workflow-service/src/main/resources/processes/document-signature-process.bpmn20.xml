@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:flowable="http://flowable.org/bpmn"
+             targetNamespace="http://www.avalon.com/document-signature">
+
+  <process id="documentSignatureProcess" name="Document Signature Process" isExecutable="true">
+    
+    <startEvent id="startEvent" name="Start Document Signature" flowable:initiator="initiator">
+      <documentation>Start the document signature process</documentation>
+    </startEvent>
+    
+    <sequenceFlow id="flow1" sourceRef="startEvent" targetRef="prepareDocuments" />
+    
+    <serviceTask id="prepareDocuments" name="Prepare Documents" 
+                 flowable:class="com.gspb.avalon.workflow.process.delegate.PrepareDocumentsDelegate">
+      <documentation>Prepare documents for signature</documentation>
+    </serviceTask>
+    
+    <sequenceFlow id="flow2" sourceRef="prepareDocuments" targetRef="sendSignatureRequests" />
+    
+    <serviceTask id="sendSignatureRequests" name="Send Signature Requests" 
+                 flowable:class="com.gspb.avalon.workflow.process.delegate.SendSignatureRequestsDelegate">
+      <documentation>Send signature requests to all signatories</documentation>
+    </serviceTask>
+    
+    <sequenceFlow id="flow3" sourceRef="sendSignatureRequests" targetRef="waitForSignatures" />
+    
+    <receiveTask id="waitForSignatures" name="Wait for Signatures">
+      <documentation>Wait for all signatories to sign the documents</documentation>
+    </receiveTask>
+    
+    <sequenceFlow id="flow4" sourceRef="waitForSignatures" targetRef="checkSignatureStatus" />
+    
+    <serviceTask id="checkSignatureStatus" name="Check Signature Status" 
+                 flowable:class="com.gspb.avalon.workflow.process.delegate.CheckSignatureStatusDelegate">
+      <documentation>Check the status of all signatures</documentation>
+    </serviceTask>
+    
+    <sequenceFlow id="flow5" sourceRef="checkSignatureStatus" targetRef="signatureStatusGateway" />
+    
+    <exclusiveGateway id="signatureStatusGateway" name="Signature Status Gateway" />
+    
+    <sequenceFlow id="flow6" sourceRef="signatureStatusGateway" targetRef="processCompletedDocuments">
+      <conditionExpression xsi:type="tFormalExpression">${allSigned}</conditionExpression>
+    </sequenceFlow>
+    
+    <sequenceFlow id="flow7" sourceRef="signatureStatusGateway" targetRef="handleRejectedSignatures">
+      <conditionExpression xsi:type="tFormalExpression">${anyRejected}</conditionExpression>
+    </sequenceFlow>
+    
+    <sequenceFlow id="flow8" sourceRef="signatureStatusGateway" targetRef="sendReminders">
+      <conditionExpression xsi:type="tFormalExpression">${!allSigned && !anyRejected && !timedOut}</conditionExpression>
+    </sequenceFlow>
+    
+    <sequenceFlow id="flow9" sourceRef="signatureStatusGateway" targetRef="handleTimedOutSignatures">
+      <conditionExpression xsi:type="tFormalExpression">${timedOut}</conditionExpression>
+    </sequenceFlow>
+    
+    <serviceTask id="sendReminders" name="Send Reminders" 
+                 flowable:class="com.gspb.avalon.workflow.process.delegate.SendRemindersDelegate">
+      <documentation>Send reminders to signatories who haven't signed yet</documentation>
+    </serviceTask>
+    
+    <sequenceFlow id="flow10" sourceRef="sendReminders" targetRef="waitForSignatures" />
+    
+    <serviceTask id="processCompletedDocuments" name="Process Completed Documents" 
+                 flowable:class="com.gspb.avalon.workflow.process.delegate.ProcessCompletedDocumentsDelegate">
+      <documentation>Process the completed documents</documentation>
+    </serviceTask>
+    
+    <sequenceFlow id="flow11" sourceRef="processCompletedDocuments" targetRef="notifySignatureComplete" />
+    
+    <serviceTask id="notifySignatureComplete" name="Notify Signature Complete" 
+                 flowable:class="com.gspb.avalon.workflow.process.delegate.NotifySignatureCompleteDelegate">
+      <documentation>Notify all parties that signature is complete</documentation>
+    </serviceTask>
+    
+    <sequenceFlow id="flow12" sourceRef="notifySignatureComplete" targetRef="endCompleted" />
+    
+    <serviceTask id="handleRejectedSignatures" name="Handle Rejected Signatures" 
+                 flowable:class="com.gspb.avalon.workflow.process.delegate.HandleRejectedSignaturesDelegate">
+      <documentation>Handle rejected signatures</documentation>
+    </serviceTask>
+    
+    <sequenceFlow id="flow13" sourceRef="handleRejectedSignatures" targetRef="notifySignatureRejected" />
+    
+    <serviceTask id="notifySignatureRejected" name="Notify Signature Rejected" 
+                 flowable:class="com.gspb.avalon.workflow.process.delegate.NotifySignatureRejectedDelegate">
+      <documentation>Notify all parties that signature was rejected</documentation>
+    </serviceTask>
+    
+    <sequenceFlow id="flow14" sourceRef="notifySignatureRejected" targetRef="endRejected" />
+    
+    <serviceTask id="handleTimedOutSignatures" name="Handle Timed Out Signatures" 
+                 flowable:class="com.gspb.avalon.workflow.process.delegate.HandleTimedOutSignaturesDelegate">
+      <documentation>Handle timed out signatures</documentation>
+    </serviceTask>
+    
+    <sequenceFlow id="flow15" sourceRef="handleTimedOutSignatures" targetRef="notifySignatureTimedOut" />
+    
+    <serviceTask id="notifySignatureTimedOut" name="Notify Signature Timed Out" 
+                 flowable:class="com.gspb.avalon.workflow.process.delegate.NotifySignatureTimedOutDelegate">
+      <documentation>Notify all parties that signature timed out</documentation>
+    </serviceTask>
+    
+    <sequenceFlow id="flow16" sourceRef="notifySignatureTimedOut" targetRef="endTimedOut" />
+    
+    <endEvent id="endCompleted" name="Signature Completed" />
+    
+    <endEvent id="endRejected" name="Signature Rejected" />
+    
+    <endEvent id="endTimedOut" name="Signature Timed Out" />
+    
+  </process>
+</definitions>
