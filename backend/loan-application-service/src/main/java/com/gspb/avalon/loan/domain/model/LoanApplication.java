@@ -344,4 +344,15 @@ public class LoanApplication extends AggregateRoot<UUID> {
         return this.terms.getAmount().divide(totalCollateralValue, 4, BigDecimal.ROUND_HALF_UP)
                 .multiply(BigDecimal.valueOf(100));
     }
+    
+    /**
+     * Checks if the loan application has a collateral of the specified type.
+     *
+     * @param type The collateral type to check for
+     * @return True if the loan application has a collateral of the specified type, false otherwise
+     */
+    public boolean hasCollateralOfType(CollateralType type) {
+        return this.collaterals.stream()
+                .anyMatch(collateral -> collateral.getType() == type);
+    }
 }

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Worksheet ss:Name="Asset Class Validation">
+  <Table ss:ExpandedColumnCount="8" ss:ExpandedRowCount="10" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultColumnWidth="65" ss:DefaultRowHeight="15">
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s62"><Data ss:Type="String">RuleSet</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">com.gspb.avalon.loan.rules</Data></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s62"><Data ss:Type="String">Import</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">com.gspb.avalon.loan.domain.model.LoanApplication</Data></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s62"><Data ss:Type="String">Import</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">com.gspb.avalon.loan.domain.model.ValidationRuleResult</Data></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s62"><Data ss:Type="String">Import</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">com.gspb.avalon.loan.domain.model.ValidationSeverity</Data></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s62"><Data ss:Type="String">Import</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">com.gspb.avalon.loan.domain.model.CollateralType</Data></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s62"><Data ss:Type="String">Import</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">java.math.BigDecimal</Data></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s62"><Data ss:Type="String">Import</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">java.util.List</Data></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s62"><Data ss:Type="String">Variables</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">List validationResults</Data></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s62"><Data ss:Type="String">RuleTable Asset Class Validation</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+    <Cell ss:StyleID="s63"></Cell>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s62"><Data ss:Type="String">CONDITION</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">CONDITION</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">CONDITION</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">ACTION</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">ACTION</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">ACTION</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">ACTION</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">ACTION</Data></Cell>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s62"><Data ss:Type="String">Asset Class</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Min LTV</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Max LTV</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Rule ID</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Rule Name</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Message</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Severity</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Overridable</Data></Cell>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s62"><Data ss:Type="String">$loanApplication : LoanApplication(hasCollateralOfType(CollateralType.$param))</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">$loanApplication.calculateLoanToValueRatio().compareTo(new BigDecimal("$param")) < 0</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">$loanApplication.calculateLoanToValueRatio().compareTo(new BigDecimal("$param")) > 0</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">validationResults.add(new ValidationRuleResult("$param_LTV", </Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">"$param LTV Ratio", </Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">"$param", </Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">ValidationSeverity.$param, </Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">$param));</Data></Cell>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s62"><Data ss:Type="String">REAL_ESTATE</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">20.0</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">75.0</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">REAL_ESTATE_LTV</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Real Estate LTV Ratio</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Real Estate LTV ratio must be between 20% and 75%</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">ERROR</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">true</Data></Cell>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s62"><Data ss:Type="String">SECURITIES</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">10.0</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">60.0</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">SECURITIES_LTV</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Securities LTV Ratio</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Securities LTV ratio must be between 10% and 60%</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">ERROR</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">true</Data></Cell>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s62"><Data ss:Type="String">ART</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">15.0</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">50.0</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">ART_LTV</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Art LTV Ratio</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Art LTV ratio must be between 15% and 50%</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">ERROR</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">true</Data></Cell>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s62"><Data ss:Type="String">JEWELRY</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">15.0</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">40.0</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">JEWELRY_LTV</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Jewelry LTV Ratio</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Jewelry LTV ratio must be between 15% and 40%</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">ERROR</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">true</Data></Cell>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s62"><Data ss:Type="String">VEHICLES</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">20.0</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">65.0</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">VEHICLES_LTV</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Vehicles LTV Ratio</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Vehicles LTV ratio must be between 20% and 65%</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">ERROR</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">true</Data></Cell>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s62"><Data ss:Type="String">BUSINESS_EQUITY</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">25.0</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">50.0</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">BUSINESS_EQUITY_LTV</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Business Equity LTV Ratio</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Business Equity LTV ratio must be between 25% and 50%</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">ERROR</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">true</Data></Cell>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s62"><Data ss:Type="String">OTHER</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">30.0</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">40.0</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">OTHER_LTV</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Other Collateral LTV Ratio</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Other collateral LTV ratio must be between 30% and 40%</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">ERROR</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">true</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>

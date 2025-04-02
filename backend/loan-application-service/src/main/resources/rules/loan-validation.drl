@@ -1,0 +1,268 @@
+package com.gspb.avalon.loan.rules;
+
+import com.gspb.avalon.loan.domain.model.LoanApplication;
+import com.gspb.avalon.loan.domain.model.ValidationRuleResult;
+import com.gspb.avalon.loan.domain.model.ValidationSeverity;
+import java.math.BigDecimal;
+import java.util.List;
+
+global List validationResults;
+
+rule "Loan to Value Ratio"
+    salience 100
+    when
+        $loanApplication : LoanApplication(calculateLoanToValueRatio().compareTo(new BigDecimal("80.0")) > 0)
+    then
+        ValidationRuleResult result = new ValidationRuleResult(
+            "LTV_RATIO",
+            "Loan-to-Value Ratio",
+            false,
+            "Loan-to-value ratio exceeds maximum allowed value of 80.0%",
+            ValidationSeverity.ERROR,
+            true
+        );
+        validationResults.add(result);
+end
+
+rule "Loan to Value Ratio - Passed"
+    salience 100
+    when
+        $loanApplication : LoanApplication(calculateLoanToValueRatio().compareTo(new BigDecimal("80.0")) <= 0)
+    then
+        ValidationRuleResult result = new ValidationRuleResult(
+            "LTV_RATIO",
+            "Loan-to-Value Ratio",
+            true,
+            "Loan-to-value ratio is within acceptable limits",
+            ValidationSeverity.INFO,
+            true
+        );
+        validationResults.add(result);
+end
+
+rule "Minimum Loan Amount"
+    salience 90
+    when
+        $loanApplication : LoanApplication(terms != null, terms.amount.compareTo(new BigDecimal("100000.0")) < 0)
+    then
+        ValidationRuleResult result = new ValidationRuleResult(
+            "MIN_LOAN_AMOUNT",
+            "Minimum Loan Amount",
+            false,
+            "Loan amount is below minimum allowed value of 100000.0",
+            ValidationSeverity.ERROR,
+            false
+        );
+        validationResults.add(result);
+end
+
+rule "Minimum Loan Amount - Passed"
+    salience 90
+    when
+        $loanApplication : LoanApplication(terms != null, terms.amount.compareTo(new BigDecimal("100000.0")) >= 0)
+    then
+        ValidationRuleResult result = new ValidationRuleResult(
+            "MIN_LOAN_AMOUNT",
+            "Minimum Loan Amount",
+            true,
+            "Loan amount meets minimum requirements",
+            ValidationSeverity.INFO,
+            false
+        );
+        validationResults.add(result);
+end
+
+rule "Maximum Loan Amount"
+    salience 80
+    when
+        $loanApplication : LoanApplication(terms != null, terms.amount.compareTo(new BigDecimal("10000000.0")) > 0)
+    then
+        ValidationRuleResult result = new ValidationRuleResult(
+            "MAX_LOAN_AMOUNT",
+            "Maximum Loan Amount",
+            false,
+            "Loan amount exceeds maximum allowed value of 10000000.0",
+            ValidationSeverity.WARNING,
+            true
+        );
+        validationResults.add(result);
+end
+
+rule "Maximum Loan Amount - Passed"
+    salience 80
+    when
+        $loanApplication : LoanApplication(terms != null, terms.amount.compareTo(new BigDecimal("10000000.0")) <= 0)
+    then
+        ValidationRuleResult result = new ValidationRuleResult(
+            "MAX_LOAN_AMOUNT",
+            "Maximum Loan Amount",
+            true,
+            "Loan amount is within maximum limits",
+            ValidationSeverity.INFO,
+            true
+        );
+        validationResults.add(result);
+end
+
+rule "Minimum Loan Term"
+    salience 70
+    when
+        $loanApplication : LoanApplication(terms != null, terms.termInMonths < 6)
+    then
+        ValidationRuleResult result = new ValidationRuleResult(
+            "MIN_TERM",
+            "Minimum Loan Term",
+            false,
+            "Loan term is below minimum allowed value of 6 months",
+            ValidationSeverity.ERROR,
+            false
+        );
+        validationResults.add(result);
+end
+
+rule "Minimum Loan Term - Passed"
+    salience 70
+    when
+        $loanApplication : LoanApplication(terms != null, terms.termInMonths >= 6)
+    then
+        ValidationRuleResult result = new ValidationRuleResult(
+            "MIN_TERM",
+            "Minimum Loan Term",
+            true,
+            "Loan term meets minimum requirements",
+            ValidationSeverity.INFO,
+            false
+        );
+        validationResults.add(result);
+end
+
+rule "Maximum Loan Term"
+    salience 60
+    when
+        $loanApplication : LoanApplication(terms != null, terms.termInMonths > 360)
+    then
+        ValidationRuleResult result = new ValidationRuleResult(
+            "MAX_TERM",
+            "Maximum Loan Term",
+            false,
+            "Loan term exceeds maximum allowed value of 360 months",
+            ValidationSeverity.WARNING,
+            true
+        );
+        validationResults.add(result);
+end
+
+rule "Maximum Loan Term - Passed"
+    salience 60
+    when
+        $loanApplication : LoanApplication(terms != null, terms.termInMonths <= 360)
+    then
+        ValidationRuleResult result = new ValidationRuleResult(
+            "MAX_TERM",
+            "Maximum Loan Term",
+            true,
+            "Loan term is within maximum limits",
+            ValidationSeverity.INFO,
+            true
+        );
+        validationResults.add(result);
+end
+
+rule "Collateral Verification"
+    salience 50
+    when
+        $loanApplication : LoanApplication(collaterals.size() > 0)
+        not LoanApplication(collaterals.stream().allMatch(c -> c.isVerified()))
+    then
+        ValidationRuleResult result = new ValidationRuleResult(
+            "COLLATERAL_VERIFICATION",
+            "Collateral Verification",
+            false,
+            "Not all collaterals are verified",
+            ValidationSeverity.ERROR,
+            true
+        );
+        validationResults.add(result);
+end
+
+rule "Collateral Verification - Passed"
+    salience 50
+    when
+        $loanApplication : LoanApplication(collaterals.size() > 0, collaterals.stream().allMatch(c -> c.isVerified()))
+    then
+        ValidationRuleResult result = new ValidationRuleResult(
+            "COLLATERAL_VERIFICATION",
+            "Collateral Verification",
+            true,
+            "All collaterals are verified",
+            ValidationSeverity.INFO,
+            true
+        );
+        validationResults.add(result);
+end
+
+rule "Interest Rate - Minimum"
+    salience 40
+    when
+        $loanApplication : LoanApplication(terms != null, terms.interestRate.compareTo(new BigDecimal("1.0")) < 0)
+    then
+        ValidationRuleResult result = new ValidationRuleResult(
+            "INTEREST_RATE",
+            "Interest Rate",
+            false,
+            "Interest rate is below minimum allowed value of 1.0%",
+            ValidationSeverity.WARNING,
+            true
+        );
+        validationResults.add(result);
+end
+
+rule "Interest Rate - Maximum"
+    salience 40
+    when
+        $loanApplication : LoanApplication(terms != null, terms.interestRate.compareTo(new BigDecimal("20.0")) > 0)
+    then
+        ValidationRuleResult result = new ValidationRuleResult(
+            "INTEREST_RATE",
+            "Interest Rate",
+            false,
+            "Interest rate exceeds maximum allowed value of 20.0%",
+            ValidationSeverity.WARNING,
+            true
+        );
+        validationResults.add(result);
+end
+
+rule "Interest Rate - Passed"
+    salience 40
+    when
+        $loanApplication : LoanApplication(terms != null, 
+                                          terms.interestRate.compareTo(new BigDecimal("1.0")) >= 0,
+                                          terms.interestRate.compareTo(new BigDecimal("20.0")) <= 0)
+    then
+        ValidationRuleResult result = new ValidationRuleResult(
+            "INTEREST_RATE",
+            "Interest Rate",
+            true,
+            "Interest rate is within acceptable limits",
+            ValidationSeverity.INFO,
+            true
+        );
+        validationResults.add(result);
+end
+
+rule "Missing Loan Terms"
+    salience 110
+    when
+        $loanApplication : LoanApplication(terms == null)
+    then
+        ValidationRuleResult result = new ValidationRuleResult(
+            "MISSING_TERMS",
+            "Missing Loan Terms",
+            false,
+            "Loan terms are not set",
+            ValidationSeverity.ERROR,
+            false
+        );
+        validationResults.add(result);
+end
