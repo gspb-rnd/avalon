@@ -6,6 +6,8 @@ import * as codepipeline_actions from 'aws-cdk-lib/aws-codepipeline-actions';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as ecr from 'aws-cdk-lib/aws-ecr';
+import * as ecs from 'aws-cdk-lib/aws-ecs';
+import * as ec2 from 'aws-cdk-lib/aws-ec2';
 
 export class AvalonPipelineStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -29,7 +31,7 @@ export class AvalonPipelineStack extends cdk.Stack {
       actionName: 'GitHub_Source',
       owner: 'gspb-rnd',
       repo: 'avalon',
-      branch: 'master',
+      branch: 'master-branch',
       oauthToken: cdk.SecretValue.secretsManager('github-token'),
       output: sourceOutput,
       trigger: codepipeline_actions.GitHubTrigger.WEBHOOK,
@@ -49,10 +51,10 @@ export class AvalonPipelineStack extends cdk.Stack {
       },
       environmentVariables: {
         AWS_ACCOUNT_ID: {
-          value: this.account,
+          value: cdk.Aws.ACCOUNT_ID,
         },
         AWS_REGION: {
-          value: this.region,
+          value: cdk.Aws.REGION,
         },
       },
       buildSpec: codebuild.BuildSpec.fromObject({
@@ -199,10 +201,10 @@ export class AvalonPipelineStack extends cdk.Stack {
       }),
       environmentVariables: {
         AWS_ACCOUNT_ID: {
-          value: this.account,
+          value: cdk.Aws.ACCOUNT_ID,
         },
         AWS_REGION: {
-          value: this.region,
+          value: cdk.Aws.REGION,
         },
         CLOUDFRONT_DISTRIBUTION_ID: {
           value: cdk.Fn.importValue('AvalonFrontendDistributionId'),
@@ -282,10 +284,97 @@ export class AvalonPipelineStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.RETAIN,
     });
 
+    const vpc = new ec2.Vpc(this, 'AvalonVpc', {
+      maxAzs: 2,
+      natGateways: 1,
+    });
+
+    const cluster = new ecs.Cluster(this, 'AvalonCluster', {
+      vpc: vpc,
+    });
+
+    const serviceRegistryTaskDef = new ecs.FargateTaskDefinition(this, 'ServiceRegistryTaskDef');
+    serviceRegistryTaskDef.addContainer('ServiceRegistryContainer', {
+      image: ecs.ContainerImage.fromEcrRepository(serviceRegistryRepo),
+      portMappings: [{ containerPort: 8761 }],
+    });
+
+    const serviceRegistryService = new ecs.FargateService(this, 'ServiceRegistryService', {
+      cluster: cluster,
+      taskDefinition: serviceRegistryTaskDef,
+      serviceName: 'avalon-service-registry',
+      desiredCount: 1,
+    });
+
+    const apiGatewayTaskDef = new ecs.FargateTaskDefinition(this, 'ApiGatewayTaskDef');
+    apiGatewayTaskDef.addContainer('ApiGatewayContainer', {
+      image: ecs.ContainerImage.fromEcrRepository(apiGatewayRepo),
+      portMappings: [{ containerPort: 8080 }],
+    });
+
+    const apiGatewayService = new ecs.FargateService(this, 'ApiGatewayService', {
+      cluster: cluster,
+      taskDefinition: apiGatewayTaskDef,
+      serviceName: 'avalon-api-gateway',
+      desiredCount: 1,
+    });
+
+    const clientServiceTaskDef = new ecs.FargateTaskDefinition(this, 'ClientServiceTaskDef');
+    clientServiceTaskDef.addContainer('ClientServiceContainer', {
+      image: ecs.ContainerImage.fromEcrRepository(clientServiceRepo),
+      portMappings: [{ containerPort: 8081 }],
+    });
+
+    const clientService = new ecs.FargateService(this, 'ClientService', {
+      cluster: cluster,
+      taskDefinition: clientServiceTaskDef,
+      serviceName: 'avalon-client-service',
+      desiredCount: 1,
+    });
+
+    const loanApplicationServiceTaskDef = new ecs.FargateTaskDefinition(this, 'LoanApplicationServiceTaskDef');
+    loanApplicationServiceTaskDef.addContainer('LoanApplicationServiceContainer', {
+      image: ecs.ContainerImage.fromEcrRepository(loanApplicationServiceRepo),
+      portMappings: [{ containerPort: 8082 }],
+    });
+
+    const loanApplicationService = new ecs.FargateService(this, 'LoanApplicationService', {
+      cluster: cluster,
+      taskDefinition: loanApplicationServiceTaskDef,
+      serviceName: 'avalon-loan-application-service',
+      desiredCount: 1,
+    });
+
+    const documentServiceTaskDef = new ecs.FargateTaskDefinition(this, 'DocumentServiceTaskDef');
+    documentServiceTaskDef.addContainer('DocumentServiceContainer', {
+      image: ecs.ContainerImage.fromEcrRepository(documentServiceRepo),
+      portMappings: [{ containerPort: 8083 }],
+    });
+
+    const documentService = new ecs.FargateService(this, 'DocumentService', {
+      cluster: cluster,
+      taskDefinition: documentServiceTaskDef,
+      serviceName: 'avalon-document-service',
+      desiredCount: 1,
+    });
+
+    const workflowServiceTaskDef = new ecs.FargateTaskDefinition(this, 'WorkflowServiceTaskDef');
+    workflowServiceTaskDef.addContainer('WorkflowServiceContainer', {
+      image: ecs.ContainerImage.fromEcrRepository(workflowServiceRepo),
+      portMappings: [{ containerPort: 8084 }],
+    });
+
+    const workflowService = new ecs.FargateService(this, 'WorkflowService', {
+      cluster: cluster,
+      taskDefinition: workflowServiceTaskDef,
+      serviceName: 'avalon-workflow-service',
+      desiredCount: 1,
+    });
+
     deployStage.addAction(
       new codepipeline_actions.EcsDeployAction({
         actionName: 'DeployServiceRegistry',
-        service: cdk.Fn.importValue('AvalonServiceRegistryService'),
+        service: serviceRegistryService,
         imageFile: backendBuildOutput.atPath('service-registry-imageDefinitions.json'),
       })
     );
@@ -293,7 +382,7 @@ export class AvalonPipelineStack extends cdk.Stack {
     deployStage.addAction(
       new codepipeline_actions.EcsDeployAction({
         actionName: 'DeployApiGateway',
-        service: cdk.Fn.importValue('AvalonApiGatewayService'),
+        service: apiGatewayService,
         imageFile: backendBuildOutput.atPath('api-gateway-imageDefinitions.json'),
       })
     );
@@ -301,7 +390,7 @@ export class AvalonPipelineStack extends cdk.Stack {
     deployStage.addAction(
       new codepipeline_actions.EcsDeployAction({
         actionName: 'DeployClientService',
-        service: cdk.Fn.importValue('AvalonClientService'),
+        service: clientService,
         imageFile: backendBuildOutput.atPath('client-service-imageDefinitions.json'),
       })
     );
@@ -309,7 +398,7 @@ export class AvalonPipelineStack extends cdk.Stack {
     deployStage.addAction(
       new codepipeline_actions.EcsDeployAction({
         actionName: 'DeployLoanApplicationService',
-        service: cdk.Fn.importValue('AvalonLoanApplicationService'),
+        service: loanApplicationService,
         imageFile: backendBuildOutput.atPath('loan-application-service-imageDefinitions.json'),
       })
     );
@@ -317,7 +406,7 @@ export class AvalonPipelineStack extends cdk.Stack {
     deployStage.addAction(
       new codepipeline_actions.EcsDeployAction({
         actionName: 'DeployDocumentService',
-        service: cdk.Fn.importValue('AvalonDocumentService'),
+        service: documentService,
         imageFile: backendBuildOutput.atPath('document-service-imageDefinitions.json'),
       })
     );
@@ -325,13 +414,13 @@ export class AvalonPipelineStack extends cdk.Stack {
     deployStage.addAction(
       new codepipeline_actions.EcsDeployAction({
         actionName: 'DeployWorkflowService',
-        service: cdk.Fn.importValue('AvalonWorkflowService'),
+        service: workflowService,
         imageFile: backendBuildOutput.atPath('workflow-service-imageDefinitions.json'),
       })
     );
 
     new cdk.CfnOutput(this, 'PipelineConsoleUrl', {
-      value: `https://${this.region}.console.aws.amazon.com/codesuite/codepipeline/pipelines/${pipeline.pipelineName}/view?region=${this.region}`,
+      value: `https://${cdk.Aws.REGION}.console.aws.amazon.com/codesuite/codepipeline/pipelines/${pipeline.pipelineName}/view?region=${cdk.Aws.REGION}`,
       description: 'URL to the CodePipeline console',
     });
   }
