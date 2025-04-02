@@ -50,32 +50,47 @@ const workflowStatusMapping: StatusMapping = {
   CANCELLED: { label: 'Cancelled', color: 'default' },
 };
 
-interface StatusChipProps {
-  status: string;
-  type: 'client' | 'loan' | 'document' | 'workflow';
+interface StatusChipProps extends Omit<ChipProps, 'label' | 'color'> {
+  label?: string;
+  status?: string;
+  type?: 'client' | 'loan' | 'document' | 'workflow';
+  color?: ChipProps['color'];
 }
 
-export const StatusChip: React.FC<StatusChipProps> = ({ status, type }) => {
-  let mapping: StatusMapping;
-
-  switch (type) {
-    case 'client':
-      mapping = clientStatusMapping;
-      break;
-    case 'loan':
-      mapping = loanStatusMapping;
-      break;
-    case 'document':
-      mapping = documentStatusMapping;
-      break;
-    case 'workflow':
-      mapping = workflowStatusMapping;
-      break;
-    default:
-      mapping = {};
+export const StatusChip: React.FC<StatusChipProps> = ({ 
+  status, 
+  type, 
+  label: propLabel, 
+  color: propColor,
+  ...chipProps 
+}) => {
+  if (propLabel && propColor) {
+    return <Chip label={propLabel} color={propColor} size="small" {...chipProps} />;
   }
+  
+  if (status && type) {
+    let mapping: StatusMapping;
 
-  const statusConfig = mapping[status] || { label: status, color: 'default' };
+    switch (type) {
+      case 'client':
+        mapping = clientStatusMapping;
+        break;
+      case 'loan':
+        mapping = loanStatusMapping;
+        break;
+      case 'document':
+        mapping = documentStatusMapping;
+        break;
+      case 'workflow':
+        mapping = workflowStatusMapping;
+        break;
+      default:
+        mapping = {};
+    }
 
-  return <Chip label={statusConfig.label} color={statusConfig.color} size="small" />;
+    const statusConfig = mapping[status] || { label: status, color: 'default' };
+    return <Chip label={statusConfig.label} color={statusConfig.color} size="small" {...chipProps} />;
+  }
+  
+  return <Chip label={propLabel || status || 'Unknown'} color={propColor || 'default'} size="small" {...chipProps} />;
 };
