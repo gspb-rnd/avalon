@@ -16,7 +16,7 @@ import {
   Person as PersonIcon
 } from '@mui/icons-material';
 import { format } from 'date-fns';
-import StatusChip from '../../../components/StatusChip';
+import { Chip } from '@mui/material';
 import { completeTask } from '../workflowSlice';
 import TaskDialog from './TaskDialog';
 
@@ -59,9 +59,11 @@ const TaskItem: React.FC<TaskItemProps> = ({ workflowId, task }) => {
                 {task.description}
               </Typography>
               <Box display="flex" alignItems="center" gap={1}>
-                <StatusChip 
+                <Chip 
                   label={task.status} 
-                  type="workflow"
+                  color={task.status === 'COMPLETED' ? 'success' : 
+                         task.status === 'IN_PROGRESS' ? 'info' : 'warning'}
+                  size="small"
                 />
                 <Typography variant="caption" color="text.secondary">
                   Priority: {task.priority}
