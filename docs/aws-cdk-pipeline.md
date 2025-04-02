@@ -31,6 +31,44 @@ The CI/CD pipeline follows this workflow:
    - Frontend Build: Builds React.js application and deploys to S3
 3. **Deploy Stage**: Deploys the microservices to ECS and invalidates CloudFront cache
 
+## Implementation Details
+
+### Infrastructure Stack
+The infrastructure stack (`AvalonInfrastructureStack`) provisions all the AWS resources needed to run the application:
+
+```typescript
+// Key components of the infrastructure stack
+const vpc = new ec2.Vpc(this, 'AvalonVpc', { maxAzs: 3, natGateways: 1 });
+const cluster = new ecs.Cluster(this, 'AvalonCluster', { vpc });
+const database = new rds.DatabaseInstance(this, 'AvalonDatabase', { /* ... */ });
+const frontendBucket = new s3.Bucket(this, 'FrontendBucket', { /* ... */ });
+const frontendDistribution = new cloudfront.Distribution(this, 'FrontendDistribution', { /* ... */ });
+const loadBalancer = new elbv2.ApplicationLoadBalancer(this, 'AvalonLoadBalancer', { /* ... */ });
+```
+
+### Pipeline Stack
+The pipeline stack (`AvalonPipelineStack`) sets up the CI/CD pipeline that builds and deploys the application:
+
+```typescript
+// Key components of the pipeline stack
+const pipeline = new codepipeline.Pipeline(this, 'AvalonPipeline', { /* ... */ });
+const sourceAction = new codepipeline_actions.GitHubSourceAction({ /* ... */ });
+const backendBuildProject = new codebuild.PipelineProject(this, 'BackendBuild', { /* ... */ });
+const frontendBuildProject = new codebuild.PipelineProject(this, 'FrontendBuild', { /* ... */ });
+```
+
+The pipeline includes ECS deployment actions for each microservice:
+
+```typescript
+deployStage.addAction(
+  new codepipeline_actions.EcsDeployAction({
+    actionName: 'DeployServiceRegistry',
+    service: serviceRegistryService,
+    imageFile: backendBuildOutput.atPath('service-registry-imageDefinitions.json'),
+  })
+);
+```
+
 ## Setup Instructions
 
 ### Prerequisites
@@ -87,3 +125,16 @@ You can customize the pipeline by modifying the following files:
 
 - `lib/avalon-infrastructure-stack.ts`: Infrastructure resources
 - `lib/avalon-pipeline-stack.ts`: CI/CD pipeline configuration
+
+## Security Considerations
+
+- The pipeline uses IAM roles with least privilege permissions
+- Secrets are stored in AWS Secrets Manager
+- All communications are encrypted in transit
+- ECR repositories scan images for vulnerabilities
+
+## Cost Optimization
+
+- The infrastructure uses t3.micro instances for development environments
+- Auto-scaling is configured to scale down during off-hours
+- S3 lifecycle policies are set to transition older artifacts to cheaper storage classes
