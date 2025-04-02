@@ -1,0 +1,48 @@
+name: Frontend CI
+
+on:
+  push:
+    branches: [ main, master, master-branch ]
+    paths:
+      - 'frontend/**'
+  pull_request:
+    branches: [ main, master, master-branch ]
+    paths:
+      - 'frontend/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install shared components dependencies
+      run: cd frontend/shared-components && npm install
+    
+    - name: Build shared components
+      run: cd frontend/shared-components && npm run build
+    
+    - name: Install advisor portal dependencies
+      run: cd frontend/advisor-portal && npm install
+    
+    - name: Run linting
+      run: cd frontend/advisor-portal && npm run lint
+    
+    - name: Run tests
+      run: cd frontend/advisor-portal && npm test
+    
+    - name: Build advisor portal
+      run: cd frontend/advisor-portal && npm run build
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: frontend-build
+        path: frontend/advisor-portal/build/
