@@ -1,0 +1,20 @@
+User: Can you please help me design a loan origination system for a Back offering this facility to High Net worth customers.
+Collateral can be portfolio, real estate or any high value artifact they have
+
+The system should
+
+1) operated by Advisors
+2) able to validate the loan application
+3) able to do KYC and valuate the complex artifacts
+4) able to generate overrides via workflow if any of rules fail
+5) able to generate loan documents and send them for digital signature
+6) create component, high level and low level design documents
+7) save all prompts between you and me in text file
+8) save all artifacts to https://github.com/gspb-rnd/loan-origination-system
+9) system should be scalable, robust and highly available
+10) should be auditable
+11) should be domain driven model
+
+Lets first discuss the design then we can implement the application
+
+Devin: I'll help you design a loan origination system for high net worth customers. I understand you want to discuss the design first, focusing on advisor operations, validation, KYC, workflows, document generation, and domain-driven architecture. Let's start with the design approach before implementation.
