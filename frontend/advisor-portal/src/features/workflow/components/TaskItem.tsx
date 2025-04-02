@@ -16,7 +16,7 @@ import {
   Person as PersonIcon
 } from '@mui/icons-material';
 import { format } from 'date-fns';
-import { StatusChip } from '@avalon/shared-components';
+import { StatusChip } from '@mui/material';
 import { completeTask } from '../workflowSlice';
 import TaskDialog from './TaskDialog';
 
