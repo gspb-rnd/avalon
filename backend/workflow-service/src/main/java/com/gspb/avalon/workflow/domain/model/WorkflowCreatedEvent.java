@@ -26,7 +26,7 @@ public class WorkflowCreatedEvent extends DomainEvent {
      * @param createdBy The user who created the workflow
      */
     public WorkflowCreatedEvent(UUID workflowId, WorkflowType workflowType, UUID businessObjectId, String createdBy) {
-        super(UUID.randomUUID(), LocalDateTime.now());
+        super();
         this.workflowId = workflowId;
         this.workflowType = workflowType;
         this.businessObjectId = businessObjectId;

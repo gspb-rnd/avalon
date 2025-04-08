@@ -30,7 +30,7 @@ public class TaskCreatedEvent extends DomainEvent {
      * @param createdBy The user who created the task
      */
     public TaskCreatedEvent(UUID taskId, UUID workflowId, String taskName, String assignee, TaskPriority priority, String createdBy) {
-        super(UUID.randomUUID(), LocalDateTime.now());
+        super();
         this.taskId = taskId;
         this.workflowId = workflowId;
         this.taskName = taskName;

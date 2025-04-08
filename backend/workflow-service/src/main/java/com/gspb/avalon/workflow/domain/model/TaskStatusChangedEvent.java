@@ -26,7 +26,7 @@ public class TaskStatusChangedEvent extends DomainEvent {
      * @param changedBy The user who changed the status
      */
     public TaskStatusChangedEvent(UUID taskId, TaskStatus oldStatus, TaskStatus newStatus, String changedBy) {
-        super(UUID.randomUUID(), LocalDateTime.now());
+        super();
         this.taskId = taskId;
         this.oldStatus = oldStatus;
         this.newStatus = newStatus;

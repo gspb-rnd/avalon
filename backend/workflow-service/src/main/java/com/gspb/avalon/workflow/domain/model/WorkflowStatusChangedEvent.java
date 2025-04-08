@@ -26,7 +26,7 @@ public class WorkflowStatusChangedEvent extends DomainEvent {
      * @param changedBy The user who changed the status
      */
     public WorkflowStatusChangedEvent(UUID workflowId, WorkflowStatus oldStatus, WorkflowStatus newStatus, String changedBy) {
-        super(UUID.randomUUID(), LocalDateTime.now());
+        super();
         this.workflowId = workflowId;
         this.oldStatus = oldStatus;
         this.newStatus = newStatus;
