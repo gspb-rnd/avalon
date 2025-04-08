@@ -23,6 +23,10 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UpdateLoanTermsCommand {
     
+    public static UpdateLoanTermsCommandBuilder builder() {
+        return new UpdateLoanTermsCommandBuilder();
+    }
+    
     public void setLoanApplicationId(UUID loanApplicationId) {
         this.loanApplicationId = loanApplicationId;
     }

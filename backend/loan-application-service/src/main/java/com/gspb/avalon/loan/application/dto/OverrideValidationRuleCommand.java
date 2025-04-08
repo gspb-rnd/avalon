@@ -17,6 +17,10 @@ import java.util.UUID;
 @AllArgsConstructor
 public class OverrideValidationRuleCommand {
     
+    public static OverrideValidationRuleCommandBuilder builder() {
+        return new OverrideValidationRuleCommandBuilder();
+    }
+    
     public void setLoanApplicationId(UUID loanApplicationId) {
         this.loanApplicationId = loanApplicationId;
     }

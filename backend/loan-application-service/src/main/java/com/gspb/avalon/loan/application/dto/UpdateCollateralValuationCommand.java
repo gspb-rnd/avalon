@@ -21,6 +21,10 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UpdateCollateralValuationCommand {
     
+    public static UpdateCollateralValuationCommandBuilder builder() {
+        return new UpdateCollateralValuationCommandBuilder();
+    }
+    
     public void setLoanApplicationId(UUID loanApplicationId) {
         this.loanApplicationId = loanApplicationId;
     }
