@@ -41,6 +41,51 @@ public class ValidationRuleResult extends ValueObject {
     }
     
     /**
+     * Gets the rule ID.
+     *
+     * @return The rule ID
+     */
+    public String getRuleId() {
+        return ruleId;
+    }
+    
+    /**
+     * Gets the rule name.
+     *
+     * @return The rule name
+     */
+    public String getRuleName() {
+        return ruleName;
+    }
+    
+    /**
+     * Checks if the rule passed.
+     *
+     * @return True if the rule passed, false otherwise
+     */
+    public boolean isPassed() {
+        return passed;
+    }
+    
+    /**
+     * Gets the validation message.
+     *
+     * @return The validation message
+     */
+    public String getMessage() {
+        return message;
+    }
+    
+    /**
+     * Gets the validation severity.
+     *
+     * @return The validation severity
+     */
+    public ValidationSeverity getSeverity() {
+        return severity;
+    }
+    
+    /**
      * Creates a new validation rule result.
      *
      * @param ruleId The rule ID
