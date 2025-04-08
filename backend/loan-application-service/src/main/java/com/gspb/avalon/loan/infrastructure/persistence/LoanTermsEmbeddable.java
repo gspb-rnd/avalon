@@ -103,6 +103,10 @@ public class LoanTermsEmbeddable {
         return earlyRepaymentAllowed != null && earlyRepaymentAllowed;
     }
     
+    public Boolean getEarlyRepaymentAllowed() {
+        return earlyRepaymentAllowed;
+    }
+    
     public BigDecimal getEarlyRepaymentFee() {
         return earlyRepaymentFee;
     }

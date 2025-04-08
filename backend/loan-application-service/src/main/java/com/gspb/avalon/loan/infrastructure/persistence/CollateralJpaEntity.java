@@ -88,4 +88,24 @@ public class CollateralJpaEntity {
     public String getAppraiserName() {
         return appraiserName;
     }
+    
+    public UUID getId() {
+        return id;
+    }
+    
+    public LoanApplicationJpaEntity getLoanApplication() {
+        return loanApplication;
+    }
+    
+    public CollateralType getType() {
+        return type;
+    }
+    
+    public String getDescription() {
+        return description;
+    }
+    
+    public BigDecimal getEstimatedValue() {
+        return estimatedValue;
+    }
 }
