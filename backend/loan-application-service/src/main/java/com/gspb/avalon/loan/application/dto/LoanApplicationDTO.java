@@ -21,10 +21,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class LoanApplicationDTO {
     
-    public static LoanApplicationDTOBuilder builder() {
-        return new LoanApplicationDTOBuilder();
-    }
-    
     private UUID id;
     private UUID clientId;
     private String advisorId;
@@ -50,5 +46,9 @@ public class LoanApplicationDTO {
     
     public void setValidationResults(List<ValidationRuleResultDTO> validationResults) {
         this.validationResults = validationResults;
+    }
+    
+    public static LoanApplicationDTOBuilder builder() {
+        return new LoanApplicationDTOBuilder();
     }
 }
