@@ -16,7 +16,7 @@ import java.util.UUID;
  * Command for adding a collateral to a loan application.
  */
 @Data
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddCollateralCommand {
@@ -34,4 +34,24 @@ public class AddCollateralCommand {
     private BigDecimal estimatedValue;
     
     private String documentationUrl;
+    
+    public UUID getLoanApplicationId() {
+        return loanApplicationId;
+    }
+    
+    public CollateralType getType() {
+        return type;
+    }
+    
+    public String getDescription() {
+        return description;
+    }
+    
+    public BigDecimal getEstimatedValue() {
+        return estimatedValue;
+    }
+    
+    public String getDocumentationUrl() {
+        return documentationUrl;
+    }
 }

@@ -19,6 +19,14 @@ public class ValidationRuleResult extends ValueObject {
     private String overrideReason;
     private String overriddenBy;
     
+    public String getOverrideReason() {
+        return overrideReason;
+    }
+    
+    public String getOverriddenBy() {
+        return overriddenBy;
+    }
+    
     /**
      * Creates a new validation rule result.
      *
