@@ -26,19 +26,19 @@ public class JpaLoanApplicationRepository implements LoanApplicationRepository {
     public LoanApplication save(LoanApplication loanApplication) {
         LoanApplicationJpaEntity entity = mapper.toJpaEntity(loanApplication);
         LoanApplicationJpaEntity savedEntity = springDataRepository.save(entity);
-        return mapper.toDomainEntity(savedEntity);
+        return mapper.toDomainModel(savedEntity);
     }
     
     @Override
     public Optional<LoanApplication> findById(UUID id) {
         return springDataRepository.findById(id)
-                .map(mapper::toDomainEntity);
+                .map(mapper::toDomainModel);
     }
     
     @Override
     public List<LoanApplication> findAll() {
         return springDataRepository.findAll().stream()
-                .map(mapper::toDomainEntity)
+                .map(mapper::toDomainModel)
                 .collect(Collectors.toList());
     }
     
@@ -60,42 +60,42 @@ public class JpaLoanApplicationRepository implements LoanApplicationRepository {
     @Override
     public List<LoanApplication> findByClientId(UUID clientId) {
         return springDataRepository.findByClientId(clientId).stream()
-                .map(mapper::toDomainEntity)
+                .map(mapper::toDomainModel)
                 .collect(Collectors.toList());
     }
     
     @Override
     public List<LoanApplication> findByAdvisorId(String advisorId) {
         return springDataRepository.findByAdvisorId(advisorId).stream()
-                .map(mapper::toDomainEntity)
+                .map(mapper::toDomainModel)
                 .collect(Collectors.toList());
     }
     
     @Override
     public List<LoanApplication> findByStatus(LoanStatus status) {
         return springDataRepository.findByStatus(status).stream()
-                .map(mapper::toDomainEntity)
+                .map(mapper::toDomainModel)
                 .collect(Collectors.toList());
     }
     
     @Override
     public List<LoanApplication> findByType(LoanType type) {
         return springDataRepository.findByLoanType(type).stream()
-                .map(mapper::toDomainEntity)
+                .map(mapper::toDomainModel)
                 .collect(Collectors.toList());
     }
     
     @Override
     public List<LoanApplication> findByClientIdAndStatus(UUID clientId, LoanStatus status) {
         return springDataRepository.findByClientIdAndStatus(clientId, status).stream()
-                .map(mapper::toDomainEntity)
+                .map(mapper::toDomainModel)
                 .collect(Collectors.toList());
     }
     
     @Override
     public List<LoanApplication> findByAdvisorIdAndStatus(String advisorId, LoanStatus status) {
         return springDataRepository.findByAdvisorIdAndStatus(advisorId, status).stream()
-                .map(mapper::toDomainEntity)
+                .map(mapper::toDomainModel)
                 .collect(Collectors.toList());
     }
 }
