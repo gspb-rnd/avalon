@@ -48,12 +48,12 @@ phases:
     commands:
       - echo Creating deployment artifacts...
       - cd backend
-      - echo '[{"name":"avalon-service-registry","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-service-registry:latest"}]' > service-registry-imageDefinitions.json
-      - echo '[{"name":"avalon-api-gateway","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-api-gateway:latest"}]' > api-gateway-imageDefinitions.json
-      - echo '[{"name":"avalon-client-service","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-client-service:latest"}]' > client-service-imageDefinitions.json
-      - echo '[{"name":"avalon-loan-application-service","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-loan-application-service:latest"}]' > loan-application-service-imageDefinitions.json
-      - echo '[{"name":"avalon-document-service","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-document-service:latest"}]' > document-service-imageDefinitions.json
-      - echo '[{"name":"avalon-workflow-service","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-workflow-service:latest"}]' > workflow-service-imageDefinitions.json
+      - echo '[{"name":"ApiGatewayContainer","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-api-gateway:latest"}]' > api-gateway-imageDefinitions.json
+      - echo '[{"name":"ClientServiceContainer","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-client-service:latest"}]' > client-service-imageDefinitions.json
+      - echo '[{"name":"LoanApplicationServiceContainer","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-loan-application-service:latest"}]' > loan-application-service-imageDefinitions.json
+      - echo '[{"name":"DocumentServiceContainer","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-document-service:latest"}]' > document-service-imageDefinitions.json
+      - echo '[{"name":"WorkflowServiceContainer","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-workflow-service:latest"}]' > workflow-service-imageDefinitions.json
+      - echo '[{"name":"ServiceRegistryContainer","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-service-registry:latest"}]' > service-registry-imageDefinitions.json
 artifacts:
   files:
     - service-registry-imageDefinitions.json
