@@ -16,7 +16,7 @@ public class CollateralValuationRejectedEvent extends DomainEvent {
     private final String reason;
 
     public CollateralValuationRejectedEvent(UUID valuationId, UUID collateralId, String reason) {
-        super(UUID.randomUUID(), LocalDateTime.now());
+        super();
         this.valuationId = valuationId;
         this.collateralId = collateralId;
         this.reason = reason;

@@ -20,7 +20,7 @@ public class CollateralValuationUpdatedEvent extends DomainEvent {
 
     public CollateralValuationUpdatedEvent(UUID valuationId, UUID collateralId, BigDecimal estimatedValue, 
                                           BigDecimal adjustedValue, ValuationStatus status) {
-        super(UUID.randomUUID(), LocalDateTime.now());
+        super();
         this.valuationId = valuationId;
         this.collateralId = collateralId;
         this.estimatedValue = estimatedValue;

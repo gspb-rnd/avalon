@@ -17,7 +17,7 @@ public class CollateralValuationCreatedEvent extends DomainEvent {
     private final AssetClass assetClass;
 
     public CollateralValuationCreatedEvent(UUID valuationId, UUID collateralId, UUID loanApplicationId, AssetClass assetClass) {
-        super(UUID.randomUUID(), LocalDateTime.now());
+        super();
         this.valuationId = valuationId;
         this.collateralId = collateralId;
         this.loanApplicationId = loanApplicationId;
