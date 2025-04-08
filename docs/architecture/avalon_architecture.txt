@@ -1,0 +1,101 @@
+# Avalon Loan Origination System - AWS Architecture Diagram
+
+## Region: us-east-1
+
+### VPC Configuration
+- AvalonVPC with 3 Availability Zones
+- Public and Private Subnets
+- NAT Gateway for outbound traffic from private subnets
+- Internet Gateway for public access
+
+### Compute Services
+- Amazon ECS (Fargate) for containerized microservices:
+  - Service Registry (Eureka) - Port 8761
+  - API Gateway (Spring Cloud Gateway) - Port 8080
+  - Client Service - Port 8081
+  - Loan Application Service - Port 8082
+  - Document Service - Port 8083
+  - Workflow Service - Port 8084
+
+### Database Services
+- Amazon RDS PostgreSQL (Primary Database)
+  - Instance Type: t3.small
+  - Storage: 20GB GP2
+  - Multi-AZ: No (Development Setup)
+  - Automated Backups: 7 days
+
+### Storage Services
+- Amazon S3
+  - Frontend Bucket (Static Website Hosting)
+  - CodePipeline Artifact Bucket
+
+### Content Delivery
+- Amazon CloudFront Distribution
+  - Origin: S3 Frontend Bucket
+  - Price Class: 100 (US, Canada, Europe)
+  - Custom Error Responses for SPA routing
+
+### Load Balancing
+- Application Load Balancer
+  - Public-facing
+  - HTTP Listener on Port 80
+  - Target Groups for microservices
+
+### Container Registry
+- Amazon ECR Repositories
+  - avalon-service-registry
+  - avalon-api-gateway
+  - avalon-client-service
+  - avalon-loan-application-service
+  - avalon-document-service
+  - avalon-workflow-service
+
+### CI/CD Pipeline
+- AWS CodePipeline
+  - Source Stage: GitHub (master-branch)
+  - Build Stage:
+    - Backend Build (Java/Maven)
+    - Frontend Build (Node.js/React)
+  - Deploy Stage:
+    - ECS Service Deployments
+    - S3 Frontend Deployment
+
+### Security
+- IAM Roles and Policies
+  - ECS Task Execution Role
+  - CodeBuild Service Roles
+  - CodePipeline Service Role
+- Security Groups
+  - ALB Security Group (Ports 80, 443)
+  - ECS Task Security Group
+  - RDS Security Group (Port 5432)
+- AWS Secrets Manager
+  - GitHub Token
+  - Database Credentials
+
+### Monitoring & Logging
+- CloudWatch Logs
+  - ECS Container Logs
+  - CodeBuild Logs
+- CloudWatch Metrics
+  - ECS Service Metrics
+  - ALB Metrics
+  - RDS Metrics
+
+## Data Flow
+1. Users access the application via CloudFront Distribution
+2. Static content served from S3 Frontend Bucket
+3. API requests routed through ALB to API Gateway service
+4. API Gateway routes requests to appropriate microservices
+5. Microservices communicate with each other and the database
+6. Service Registry provides service discovery
+
+## CI/CD Flow
+1. Code changes pushed to GitHub repository
+2. CodePipeline triggered by webhook
+3. Source code pulled from GitHub
+4. Backend services built and containerized
+5. Frontend built with environment variables
+6. Container images pushed to ECR
+7. ECS services updated with new container images
+8. Frontend deployed to S3 and CloudFront cache invalidated
