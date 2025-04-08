@@ -167,8 +167,7 @@ public class LoanApplicationMapper {
      */
     private List<CollateralJpaEntity> mapCollaterals(List<Collateral> collaterals, LoanApplicationJpaEntity loanApplicationEntity) {
         return collaterals.stream()
-                .map(collateral -> {
-                    return CollateralJpaEntity.builder()
+                .map(collateral -> CollateralJpaEntity.builder()
                         .id(collateral.getId())
                         .loanApplication(loanApplicationEntity)
                         .type(collateral.getType())
@@ -180,8 +179,7 @@ public class LoanApplicationMapper {
                         .appraiserName(collateral.getAppraiserName())
                         .documentationUrl(collateral.getDocumentationUrl())
                         .verified(collateral.isVerified())
-                        .build();
-                })
+                        .build())
                 .collect(Collectors.toList());
     }
     
@@ -245,8 +243,7 @@ public class LoanApplicationMapper {
      */
     private List<ValidationRuleResultJpaEntity> mapValidationResults(List<ValidationRuleResult> validationResults, LoanApplicationJpaEntity loanApplicationEntity) {
         return validationResults.stream()
-                .map(result -> {
-                    return ValidationRuleResultJpaEntity.builder()
+                .map(result -> ValidationRuleResultJpaEntity.builder()
                         .loanApplication(loanApplicationEntity)
                         .ruleId(result.getRuleId())
                         .ruleName(result.getRuleName())
@@ -257,8 +254,7 @@ public class LoanApplicationMapper {
                         .overridden(result.isOverridden())
                         .overrideReason(result.getOverrideReason())
                         .overriddenBy(result.getOverriddenBy())
-                        .build();
-                })
+                        .build())
                 .collect(Collectors.toList());
     }
     
