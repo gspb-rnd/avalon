@@ -208,7 +208,7 @@ export class AvalonPipelineStack extends cdk.Stack {
               '  cd ../../',
               '  aws s3 sync frontend/advisor-portal/build/ s3://avalon-frontend-$AWS_ACCOUNT_ID-$AWS_REGION/ --delete',
               'fi',
-              'aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"',
+              'aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*" || echo "CloudFront invalidation failed, but continuing"',
             ],
           },
         },
