@@ -67,4 +67,40 @@ public class ValidationRuleResultJpaEntity {
     public boolean isOverridden() {
         return overridden != null && overridden;
     }
+    
+    public String getRuleId() {
+        return ruleId;
+    }
+    
+    public String getRuleName() {
+        return ruleName;
+    }
+    
+    public Boolean getPassed() {
+        return passed;
+    }
+    
+    public String getMessage() {
+        return message;
+    }
+    
+    public ValidationSeverity getSeverity() {
+        return severity;
+    }
+    
+    public Boolean getOverridable() {
+        return overridable;
+    }
+    
+    public Boolean getOverridden() {
+        return overridden;
+    }
+    
+    public String getOverrideReason() {
+        return overrideReason;
+    }
+    
+    public String getOverriddenBy() {
+        return overriddenBy;
+    }
 }
