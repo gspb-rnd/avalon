@@ -32,6 +32,33 @@ public class LoanApplication extends AggregateRoot<UUID> {
     private UUID documentPackageId;
     
     /**
+     * Gets the client ID.
+     *
+     * @return The client ID
+     */
+    public UUID getClientId() {
+        return clientId;
+    }
+    
+    /**
+     * Gets the advisor ID.
+     *
+     * @return The advisor ID
+     */
+    public String getAdvisorId() {
+        return advisorId;
+    }
+    
+    /**
+     * Gets the loan type.
+     *
+     * @return The loan type
+     */
+    public LoanType getLoanType() {
+        return loanType;
+    }
+    
+    /**
      * Creates a new loan application.
      *
      * @param id The loan application ID
