@@ -198,8 +198,8 @@ export class AvalonPipelineStack extends cdk.Stack {
           post_build: {
             commands: [
               'echo Preparing frontend artifacts...',
-              'cd frontend/advisor-portal',
-              'aws s3 sync build/ s3://avalon-frontend-$AWS_ACCOUNT_ID-$AWS_REGION/ --delete',
+              'ls -la',
+              'aws s3 sync frontend/advisor-portal/build/ s3://avalon-frontend-$AWS_ACCOUNT_ID-$AWS_REGION/ --delete',
               'aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"',
             ],
           },
