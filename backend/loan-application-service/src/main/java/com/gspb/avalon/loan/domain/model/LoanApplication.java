@@ -59,6 +59,69 @@ public class LoanApplication extends AggregateRoot<UUID> {
     }
     
     /**
+     * Gets the purpose.
+     *
+     * @return The purpose
+     */
+    public String getPurpose() {
+        return purpose;
+    }
+    
+    /**
+     * Gets the rejection reason.
+     *
+     * @return The rejection reason
+     */
+    public String getRejectionReason() {
+        return rejectionReason;
+    }
+    
+    /**
+     * Gets the approval notes.
+     *
+     * @return The approval notes
+     */
+    public String getApprovalNotes() {
+        return approvalNotes;
+    }
+    
+    /**
+     * Gets the document package ID.
+     *
+     * @return The document package ID
+     */
+    public UUID getDocumentPackageId() {
+        return documentPackageId;
+    }
+    
+    /**
+     * Gets the created at timestamp.
+     *
+     * @return The created at timestamp
+     */
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+    
+    /**
+     * Gets the updated at timestamp.
+     *
+     * @return The updated at timestamp
+     */
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+    
+    /**
+     * Gets the loan terms.
+     *
+     * @return The loan terms
+     */
+    public LoanTerms getTerms() {
+        return terms;
+    }
+    
+    /**
      * Creates a new loan application.
      *
      * @param id The loan application ID
