@@ -7,7 +7,7 @@ import lombok.Getter;
  * Value object representing the result of a validation rule.
  */
 @Getter
-public class ValidationRuleResult extends ValueObject {
+public class ValidationRuleResult implements ValueObject {
     
     private final String ruleId;
     private final String ruleName;

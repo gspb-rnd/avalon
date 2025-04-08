@@ -10,7 +10,7 @@ import java.time.LocalDate;
  * Value object representing loan terms in the system.
  */
 @Getter
-public class LoanTerms extends ValueObject {
+public class LoanTerms implements ValueObject {
     
     private final BigDecimal amount;
     private final String currency;

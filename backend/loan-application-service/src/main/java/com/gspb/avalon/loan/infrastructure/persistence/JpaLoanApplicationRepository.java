@@ -42,7 +42,6 @@ public class JpaLoanApplicationRepository implements LoanApplicationRepository {
                 .collect(Collectors.toList());
     }
     
-    @Override
     public void deleteById(UUID id) {
         springDataRepository.deleteById(id);
     }
