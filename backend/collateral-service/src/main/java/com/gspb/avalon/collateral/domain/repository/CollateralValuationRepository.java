@@ -63,9 +63,25 @@ public interface CollateralValuationRepository extends Repository<CollateralValu
     CollateralValuation save(CollateralValuation collateralValuation);
     
     /**
-     * Delete a collateral valuation.
+     * Delete a collateral valuation by ID.
      *
      * @param id The ID of the valuation to delete
      */
     void deleteById(UUID id);
+    
+    /**
+     * Delete a collateral valuation.
+     *
+     * @param collateralValuation The valuation to delete
+     */
+    @Override
+    void delete(CollateralValuation collateralValuation);
+    
+    /**
+     * Find all collateral valuations.
+     *
+     * @return List of all collateral valuations
+     */
+    @Override
+    List<CollateralValuation> findAll();
 }
