@@ -22,4 +22,44 @@ public class ValuationResult {
     private RiskLevel riskLevel;
     private LocalDateTime expirationDate;
     private String notes;
+    
+    public BigDecimal getEstimatedValue() {
+        return estimatedValue;
+    }
+    
+    public void setEstimatedValue(BigDecimal estimatedValue) {
+        this.estimatedValue = estimatedValue;
+    }
+    
+    public BigDecimal getHaircut() {
+        return haircut;
+    }
+    
+    public void setHaircut(BigDecimal haircut) {
+        this.haircut = haircut;
+    }
+    
+    public RiskLevel getRiskLevel() {
+        return riskLevel;
+    }
+    
+    public void setRiskLevel(RiskLevel riskLevel) {
+        this.riskLevel = riskLevel;
+    }
+    
+    public LocalDateTime getExpirationDate() {
+        return expirationDate;
+    }
+    
+    public void setExpirationDate(LocalDateTime expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+    
+    public String getNotes() {
+        return notes;
+    }
+    
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 }
