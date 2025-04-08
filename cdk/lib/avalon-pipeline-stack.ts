@@ -288,82 +288,34 @@ export class AvalonPipelineStack extends cdk.Stack {
       securityGroups: []
     });
 
-    const serviceRegistryTaskDef = new ecs.FargateTaskDefinition(this, 'ServiceRegistryTaskDef');
-    serviceRegistryTaskDef.addContainer('ServiceRegistryContainer', {
-      image: ecs.ContainerImage.fromEcrRepository(serviceRegistryRepo),
-      portMappings: [{ containerPort: 8761 }],
-    });
-
-    const serviceRegistryService = new ecs.FargateService(this, 'ServiceRegistryService', {
-      cluster: cluster,
-      taskDefinition: serviceRegistryTaskDef,
+    const serviceRegistryService = ecs.FargateService.fromFargateServiceAttributes(this, 'ServiceRegistryService', {
+      cluster,
       serviceName: 'avalon-service-registry',
-      desiredCount: 1,
     });
 
-    const apiGatewayTaskDef = new ecs.FargateTaskDefinition(this, 'ApiGatewayTaskDef');
-    apiGatewayTaskDef.addContainer('ApiGatewayContainer', {
-      image: ecs.ContainerImage.fromEcrRepository(apiGatewayRepo),
-      portMappings: [{ containerPort: 8080 }],
-    });
-
-    const apiGatewayService = new ecs.FargateService(this, 'ApiGatewayService', {
-      cluster: cluster,
-      taskDefinition: apiGatewayTaskDef,
+    const apiGatewayService = ecs.FargateService.fromFargateServiceAttributes(this, 'ApiGatewayService', {
+      cluster,
       serviceName: 'avalon-api-gateway',
-      desiredCount: 1,
     });
 
-    const clientServiceTaskDef = new ecs.FargateTaskDefinition(this, 'ClientServiceTaskDef');
-    clientServiceTaskDef.addContainer('ClientServiceContainer', {
-      image: ecs.ContainerImage.fromEcrRepository(clientServiceRepo),
-      portMappings: [{ containerPort: 8081 }],
-    });
-
-    const clientService = new ecs.FargateService(this, 'ClientService', {
-      cluster: cluster,
-      taskDefinition: clientServiceTaskDef,
+    const clientService = ecs.FargateService.fromFargateServiceAttributes(this, 'ClientService', {
+      cluster,
       serviceName: 'avalon-client-service',
-      desiredCount: 1,
     });
 
-    const loanApplicationServiceTaskDef = new ecs.FargateTaskDefinition(this, 'LoanApplicationServiceTaskDef');
-    loanApplicationServiceTaskDef.addContainer('LoanApplicationServiceContainer', {
-      image: ecs.ContainerImage.fromEcrRepository(loanApplicationServiceRepo),
-      portMappings: [{ containerPort: 8082 }],
-    });
-
-    const loanApplicationService = new ecs.FargateService(this, 'LoanApplicationService', {
-      cluster: cluster,
-      taskDefinition: loanApplicationServiceTaskDef,
+    const loanApplicationService = ecs.FargateService.fromFargateServiceAttributes(this, 'LoanApplicationService', {
+      cluster,
       serviceName: 'avalon-loan-application-service',
-      desiredCount: 1,
     });
 
-    const documentServiceTaskDef = new ecs.FargateTaskDefinition(this, 'DocumentServiceTaskDef');
-    documentServiceTaskDef.addContainer('DocumentServiceContainer', {
-      image: ecs.ContainerImage.fromEcrRepository(documentServiceRepo),
-      portMappings: [{ containerPort: 8083 }],
-    });
-
-    const documentService = new ecs.FargateService(this, 'DocumentService', {
-      cluster: cluster,
-      taskDefinition: documentServiceTaskDef,
+    const documentService = ecs.FargateService.fromFargateServiceAttributes(this, 'DocumentService', {
+      cluster,
       serviceName: 'avalon-document-service',
-      desiredCount: 1,
     });
 
-    const workflowServiceTaskDef = new ecs.FargateTaskDefinition(this, 'WorkflowServiceTaskDef');
-    workflowServiceTaskDef.addContainer('WorkflowServiceContainer', {
-      image: ecs.ContainerImage.fromEcrRepository(workflowServiceRepo),
-      portMappings: [{ containerPort: 8084 }],
-    });
-
-    const workflowService = new ecs.FargateService(this, 'WorkflowService', {
-      cluster: cluster,
-      taskDefinition: workflowServiceTaskDef,
+    const workflowService = ecs.FargateService.fromFargateServiceAttributes(this, 'WorkflowService', {
+      cluster,
       serviceName: 'avalon-workflow-service',
-      desiredCount: 1,
     });
 
     deployStage.addAction(
