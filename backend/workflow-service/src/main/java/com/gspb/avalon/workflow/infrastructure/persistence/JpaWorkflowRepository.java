@@ -48,6 +48,16 @@ public class JpaWorkflowRepository implements WorkflowRepository {
     }
     
     @Override
+    public boolean existsById(UUID id) {
+        return springDataRepository.existsById(id);
+    }
+    
+    @Override
+    public void delete(Workflow workflow) {
+        springDataRepository.deleteById(workflow.getId());
+    }
+    
+    @Override
     public List<Workflow> findByBusinessObjectId(UUID businessObjectId) {
         return springDataRepository.findByBusinessObjectId(businessObjectId).stream()
                 .map(mapper::toDomainModel)
