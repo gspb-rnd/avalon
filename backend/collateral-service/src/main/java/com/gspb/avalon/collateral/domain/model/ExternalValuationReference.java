@@ -4,13 +4,14 @@ import com.gspb.avalon.shared.domain.ValueObject;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
  * Value object representing a reference to an external valuation source.
  */
 @Getter
-public class ExternalValuationReference extends ValueObject {
+public class ExternalValuationReference implements ValueObject {
     private final UUID id;
     private final UUID valuationId;
     private final String sourceSystem;
@@ -50,5 +51,23 @@ public class ExternalValuationReference extends ValueObject {
     
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ExternalValuationReference that = (ExternalValuationReference) o;
+        return Objects.equals(id, that.id) &&
+               Objects.equals(valuationId, that.valuationId) &&
+               Objects.equals(sourceSystem, that.sourceSystem) &&
+               Objects.equals(referenceId, that.referenceId) &&
+               Objects.equals(referenceUrl, that.referenceUrl) &&
+               Objects.equals(createdAt, that.createdAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, valuationId, sourceSystem, referenceId, referenceUrl, createdAt);
     }
 }

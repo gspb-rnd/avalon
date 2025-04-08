@@ -12,7 +12,7 @@ import java.util.UUID;
 /**
  * Repository interface for CollateralValuation aggregate.
  */
-public interface CollateralValuationRepository extends Repository<CollateralValuation> {
+public interface CollateralValuationRepository extends Repository<CollateralValuation, UUID> {
     
     /**
      * Find a collateral valuation by its ID.

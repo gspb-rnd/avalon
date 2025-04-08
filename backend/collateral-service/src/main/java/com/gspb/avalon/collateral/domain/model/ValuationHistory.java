@@ -5,13 +5,14 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
  * Value object representing a historical valuation record for a collateral asset.
  */
 @Getter
-public class ValuationHistory extends ValueObject {
+public class ValuationHistory implements ValueObject {
     private final UUID id;
     private final UUID valuationId;
     private final BigDecimal estimatedValue;
@@ -70,5 +71,27 @@ public class ValuationHistory extends ValueObject {
     
     public String getValuatedBy() {
         return valuatedBy;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ValuationHistory that = (ValuationHistory) o;
+        return Objects.equals(id, that.id) &&
+               Objects.equals(valuationId, that.valuationId) &&
+               Objects.equals(estimatedValue, that.estimatedValue) &&
+               Objects.equals(haircut, that.haircut) &&
+               Objects.equals(adjustedValue, that.adjustedValue) &&
+               riskLevel == that.riskLevel &&
+               valuationMethod == that.valuationMethod &&
+               Objects.equals(valuationDate, that.valuationDate) &&
+               Objects.equals(valuatedBy, that.valuatedBy);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, valuationId, estimatedValue, haircut, adjustedValue, 
+                           riskLevel, valuationMethod, valuationDate, valuatedBy);
     }
 }

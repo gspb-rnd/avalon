@@ -4,13 +4,14 @@ import com.gspb.avalon.shared.domain.ValueObject;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
  * Value object representing a risk factor associated with a collateral valuation.
  */
 @Getter
-public class RiskFactor extends ValueObject {
+public class RiskFactor implements ValueObject {
     private final UUID id;
     private final UUID valuationId;
     private final String factorName;
@@ -50,5 +51,23 @@ public class RiskFactor extends ValueObject {
     
     public LocalDateTime getIdentifiedAt() {
         return identifiedAt;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RiskFactor that = (RiskFactor) o;
+        return Objects.equals(id, that.id) &&
+               Objects.equals(valuationId, that.valuationId) &&
+               Objects.equals(factorName, that.factorName) &&
+               Objects.equals(description, that.description) &&
+               impact == that.impact &&
+               Objects.equals(identifiedAt, that.identifiedAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, valuationId, factorName, description, impact, identifiedAt);
     }
 }
