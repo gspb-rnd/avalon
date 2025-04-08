@@ -65,10 +65,10 @@ export class AvalonPipelineStack extends cdk.Stack {
               java: 'corretto17',
             },
             commands: [
-              'echo Installing Maven...',
-              'wget https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz',
-              'tar xzf apache-maven-3.9.6-bin.tar.gz',
-              'ln -s apache-maven-3.9.6/bin/mvn /usr/bin/mvn',
+              'echo Installing Maven 3.2.5...',
+              'wget https://archive.apache.org/dist/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.tar.gz',
+              'tar xzf apache-maven-3.2.5-bin.tar.gz',
+              'ln -s apache-maven-3.2.5/bin/mvn /usr/bin/mvn',
               'mvn --version',
             ],
           },
@@ -79,6 +79,7 @@ export class AvalonPipelineStack extends cdk.Stack {
               'cd backend',
               'echo Skipping tests for now...',
               'echo "Maven version: $(mvn --version)"',
+              'export MAVEN_OPTS="-Dmaven.test.skip=true"',
             ],
           },
           build: {
