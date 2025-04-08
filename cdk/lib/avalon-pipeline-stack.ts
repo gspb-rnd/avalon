@@ -80,6 +80,7 @@ export class AvalonPipelineStack extends cdk.Stack {
               'echo Skipping tests for now...',
               'echo "Maven version: $(mvn --version)"',
               'export MAVEN_OPTS="-Dmaven.test.skip=true"',
+              'mvn clean install -DskipTests',
             ],
           },
           build: {
