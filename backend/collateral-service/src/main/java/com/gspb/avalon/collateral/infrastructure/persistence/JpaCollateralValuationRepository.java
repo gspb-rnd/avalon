@@ -67,4 +67,9 @@ public class JpaCollateralValuationRepository implements CollateralValuationRepo
     public void deleteById(UUID id) {
         repository.deleteById(id);
     }
+    
+    @Override
+    public boolean existsById(UUID id) {
+        return repository.existsById(id);
+    }
 }
