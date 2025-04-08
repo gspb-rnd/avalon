@@ -204,8 +204,10 @@ export class AvalonPipelineStack extends cdk.Stack {
           },
         },
         artifacts: {
-          'base-directory': 'frontend/advisor-portal/build',
-          files: ['**/*'],
+          'base-directory': '.',
+          files: [
+            'frontend/advisor-portal/build/**/*',
+          ],
         },
       }),
       environmentVariables: {
