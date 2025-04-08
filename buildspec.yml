@@ -46,18 +46,17 @@ phases:
   post_build:
     commands:
       - echo Creating deployment artifacts...
-      - cd backend
-      - echo '{"ImageURI":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-service-registry:latest"}' > service-registry-imageDefinitions.json
-      - echo '{"ImageURI":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-api-gateway:latest"}' > api-gateway-imageDefinitions.json
-      - echo '{"ImageURI":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-client-service:latest"}' > client-service-imageDefinitions.json
-      - echo '{"ImageURI":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-loan-application-service:latest"}' > loan-application-service-imageDefinitions.json
-      - echo '{"ImageURI":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-document-service:latest"}' > document-service-imageDefinitions.json
-      - echo '{"ImageURI":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-workflow-service:latest"}' > workflow-service-imageDefinitions.json
+      - echo '[{"name":"ServiceRegistryContainer","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-service-registry:latest"}]' > service-registry-imageDefinitions.json
+      - echo '[{"name":"ApiGatewayContainer","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-api-gateway:latest"}]' > api-gateway-imageDefinitions.json
+      - echo '[{"name":"ClientServiceContainer","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-client-service:latest"}]' > client-service-imageDefinitions.json
+      - echo '[{"name":"LoanApplicationServiceContainer","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-loan-application-service:latest"}]' > loan-application-service-imageDefinitions.json
+      - echo '[{"name":"DocumentServiceContainer","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-document-service:latest"}]' > document-service-imageDefinitions.json
+      - echo '[{"name":"WorkflowServiceContainer","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-workflow-service:latest"}]' > workflow-service-imageDefinitions.json
 artifacts:
   files:
-    - backend/service-registry-imageDefinitions.json
-    - backend/api-gateway-imageDefinitions.json
-    - backend/client-service-imageDefinitions.json
-    - backend/loan-application-service-imageDefinitions.json
-    - backend/document-service-imageDefinitions.json
-    - backend/workflow-service-imageDefinitions.json
+    - service-registry-imageDefinitions.json
+    - api-gateway-imageDefinitions.json
+    - client-service-imageDefinitions.json
+    - loan-application-service-imageDefinitions.json
+    - document-service-imageDefinitions.json
+    - workflow-service-imageDefinitions.json
