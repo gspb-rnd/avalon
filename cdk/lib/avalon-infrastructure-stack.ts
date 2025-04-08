@@ -208,6 +208,127 @@ export class AvalonInfrastructureStack extends cdk.Stack {
       },
     });
 
+    const logGroups = {
+      apiGateway: new logs.LogGroup(this, 'ApiGatewayLogGroup', {
+        logGroupName: '/ecs/avalon-api-gateway',
+        retention: logs.RetentionDays.ONE_MONTH,
+        removalPolicy: cdk.RemovalPolicy.DESTROY,
+      }),
+      clientService: new logs.LogGroup(this, 'ClientServiceLogGroup', {
+        logGroupName: '/ecs/avalon-client-service',
+        retention: logs.RetentionDays.ONE_MONTH,
+        removalPolicy: cdk.RemovalPolicy.DESTROY,
+      }),
+      loanApplicationService: new logs.LogGroup(this, 'LoanApplicationServiceLogGroup', {
+        logGroupName: '/ecs/avalon-loan-application-service',
+        retention: logs.RetentionDays.ONE_MONTH,
+        removalPolicy: cdk.RemovalPolicy.DESTROY,
+      }),
+      documentService: new logs.LogGroup(this, 'DocumentServiceLogGroup', {
+        logGroupName: '/ecs/avalon-document-service',
+        retention: logs.RetentionDays.ONE_MONTH,
+        removalPolicy: cdk.RemovalPolicy.DESTROY,
+      }),
+      workflowService: new logs.LogGroup(this, 'WorkflowServiceLogGroup', {
+        logGroupName: '/ecs/avalon-workflow-service',
+        retention: logs.RetentionDays.ONE_MONTH,
+        removalPolicy: cdk.RemovalPolicy.DESTROY,
+      }),
+    };
+
+    const taskDefinitions = {
+      apiGateway: new ecs.FargateTaskDefinition(this, 'ApiGatewayTaskDef', {
+        memoryLimitMiB: 1024,
+        cpu: 512,
+        executionRole: taskExecutionRole,
+      }),
+      clientService: new ecs.FargateTaskDefinition(this, 'ClientServiceTaskDef', {
+        memoryLimitMiB: 1024,
+        cpu: 512,
+        executionRole: taskExecutionRole,
+      }),
+      loanApplicationService: new ecs.FargateTaskDefinition(this, 'LoanApplicationServiceTaskDef', {
+        memoryLimitMiB: 1024,
+        cpu: 512,
+        executionRole: taskExecutionRole,
+      }),
+      documentService: new ecs.FargateTaskDefinition(this, 'DocumentServiceTaskDef', {
+        memoryLimitMiB: 1024,
+        cpu: 512,
+        executionRole: taskExecutionRole,
+      }),
+      workflowService: new ecs.FargateTaskDefinition(this, 'WorkflowServiceTaskDef', {
+        memoryLimitMiB: 1024,
+        cpu: 512,
+        executionRole: taskExecutionRole,
+      }),
+    };
+
+    taskDefinitions.apiGateway.addContainer('ApiGatewayContainer', {
+      image: ecs.ContainerImage.fromEcrRepository(this.ecrRepositories.apiGateway),
+      portMappings: [{ containerPort: 8080 }],
+      logging: ecs.LogDrivers.awsLogs({
+        logGroup: logGroups.apiGateway,
+        streamPrefix: 'api-gateway',
+      }),
+      environment: {
+        'SPRING_PROFILES_ACTIVE': 'prod',
+        'EUREKA_CLIENT_SERVICEURL_DEFAULTZONE': 'http://service-registry:8761/eureka/',
+      },
+    });
+
+    taskDefinitions.clientService.addContainer('ClientServiceContainer', {
+      image: ecs.ContainerImage.fromEcrRepository(this.ecrRepositories.clientService),
+      portMappings: [{ containerPort: 8081 }],
+      logging: ecs.LogDrivers.awsLogs({
+        logGroup: logGroups.clientService,
+        streamPrefix: 'client-service',
+      }),
+      environment: {
+        'SPRING_PROFILES_ACTIVE': 'prod',
+        'EUREKA_CLIENT_SERVICEURL_DEFAULTZONE': 'http://service-registry:8761/eureka/',
+      },
+    });
+
+    taskDefinitions.loanApplicationService.addContainer('LoanApplicationServiceContainer', {
+      image: ecs.ContainerImage.fromEcrRepository(this.ecrRepositories.loanApplicationService),
+      portMappings: [{ containerPort: 8082 }],
+      logging: ecs.LogDrivers.awsLogs({
+        logGroup: logGroups.loanApplicationService,
+        streamPrefix: 'loan-application-service',
+      }),
+      environment: {
+        'SPRING_PROFILES_ACTIVE': 'prod',
+        'EUREKA_CLIENT_SERVICEURL_DEFAULTZONE': 'http://service-registry:8761/eureka/',
+      },
+    });
+
+    taskDefinitions.documentService.addContainer('DocumentServiceContainer', {
+      image: ecs.ContainerImage.fromEcrRepository(this.ecrRepositories.documentService),
+      portMappings: [{ containerPort: 8083 }],
+      logging: ecs.LogDrivers.awsLogs({
+        logGroup: logGroups.documentService,
+        streamPrefix: 'document-service',
+      }),
+      environment: {
+        'SPRING_PROFILES_ACTIVE': 'prod',
+        'EUREKA_CLIENT_SERVICEURL_DEFAULTZONE': 'http://service-registry:8761/eureka/',
+      },
+    });
+
+    taskDefinitions.workflowService.addContainer('WorkflowServiceContainer', {
+      image: ecs.ContainerImage.fromEcrRepository(this.ecrRepositories.workflowService),
+      portMappings: [{ containerPort: 8084 }],
+      logging: ecs.LogDrivers.awsLogs({
+        logGroup: logGroups.workflowService,
+        streamPrefix: 'workflow-service',
+      }),
+      environment: {
+        'SPRING_PROFILES_ACTIVE': 'prod',
+        'EUREKA_CLIENT_SERVICEURL_DEFAULTZONE': 'http://service-registry:8761/eureka/',
+      },
+    });
+
     const apiGatewayTargetGroup = new elbv2.ApplicationTargetGroup(this, 'ApiGatewayTargetGroup', {
       vpc: this.vpc,
       port: 8080,
@@ -230,6 +351,84 @@ export class AvalonInfrastructureStack extends cdk.Stack {
     httpListener.addTargetGroups('ApiGatewayTargetGroup', {
       targetGroups: [apiGatewayTargetGroup],
     });
+
+    const services = {
+      apiGateway: new ecs.FargateService(this, 'ApiGatewayService', {
+        cluster: this.cluster,
+        taskDefinition: taskDefinitions.apiGateway,
+        desiredCount: 1,
+        securityGroups: [ecsTaskSecurityGroup],
+        assignPublicIp: false,
+        vpcSubnets: {
+          subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
+        },
+      }),
+      clientService: new ecs.FargateService(this, 'ClientService', {
+        cluster: this.cluster,
+        taskDefinition: taskDefinitions.clientService,
+        desiredCount: 1,
+        securityGroups: [ecsTaskSecurityGroup],
+        assignPublicIp: false,
+        vpcSubnets: {
+          subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
+        },
+      }),
+      loanApplicationService: new ecs.FargateService(this, 'LoanApplicationService', {
+        cluster: this.cluster,
+        taskDefinition: taskDefinitions.loanApplicationService,
+        desiredCount: 1,
+        securityGroups: [ecsTaskSecurityGroup],
+        assignPublicIp: false,
+        vpcSubnets: {
+          subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
+        },
+      }),
+      documentService: new ecs.FargateService(this, 'DocumentService', {
+        cluster: this.cluster,
+        taskDefinition: taskDefinitions.documentService,
+        desiredCount: 1,
+        securityGroups: [ecsTaskSecurityGroup],
+        assignPublicIp: false,
+        vpcSubnets: {
+          subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
+        },
+      }),
+      workflowService: new ecs.FargateService(this, 'WorkflowService', {
+        cluster: this.cluster,
+        taskDefinition: taskDefinitions.workflowService,
+        desiredCount: 1,
+        securityGroups: [ecsTaskSecurityGroup],
+        assignPublicIp: false,
+        vpcSubnets: {
+          subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
+        },
+      }),
+    };
+
+    const namespace = new ecs.CloudMapNamespace(this, 'ServiceDiscoveryNamespace', {
+      vpc: this.vpc,
+      name: 'avalon.local',
+    });
+
+    const serviceRegistry = new ecs.CloudMapService(this, 'ServiceRegistryDiscovery', {
+      namespace,
+      name: 'service-registry',
+      dnsRecordType: ecs.DnsRecordType.A,
+      dnsTtl: cdk.Duration.seconds(30),
+    });
+
+    const apiGatewayDiscovery = new ecs.CloudMapService(this, 'ApiGatewayDiscovery', {
+      namespace,
+      name: 'api-gateway',
+      dnsRecordType: ecs.DnsRecordType.A,
+      dnsTtl: cdk.Duration.seconds(30),
+    });
+
+    services.apiGateway.associateCloudMapService({
+      service: apiGatewayDiscovery,
+    });
+
+    services.apiGateway.attachToApplicationTargetGroup(apiGatewayTargetGroup);
 
     new cdk.CfnOutput(this, 'FrontendUrl', {
       value: `https://${this.frontendDistribution.distributionDomainName}`,
