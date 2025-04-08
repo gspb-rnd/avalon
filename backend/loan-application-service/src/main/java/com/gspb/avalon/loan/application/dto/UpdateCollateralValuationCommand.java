@@ -21,9 +21,23 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UpdateCollateralValuationCommand {
     
-    public static UpdateCollateralValuationCommandBuilder builder() {
-        return new UpdateCollateralValuationCommandBuilder();
-    }
+    private UUID loanApplicationId;
+    
+    private UUID collateralId;
+    
+    @NotNull(message = "Appraiser value is required")
+    @DecimalMin(value = "0.01", message = "Appraiser value must be greater than zero")
+    private BigDecimal appraiserValue;
+    
+    @NotBlank(message = "Appraiser name is required")
+    private String appraiserName;
+    
+    @NotNull(message = "Valuation date is required")
+    private LocalDate valuationDate;
+    
+    @NotNull(message = "Loan to value ratio is required")
+    @DecimalMin(value = "0.01", message = "Loan to value ratio must be greater than zero")
+    private BigDecimal loanToValueRatio;
     
     public void setLoanApplicationId(UUID loanApplicationId) {
         this.loanApplicationId = loanApplicationId;
@@ -57,21 +71,7 @@ public class UpdateCollateralValuationCommand {
         return loanApplicationId;
     }
     
-    private UUID loanApplicationId;
-    
-    private UUID collateralId;
-    
-    @NotNull(message = "Appraiser value is required")
-    @DecimalMin(value = "0.01", message = "Appraiser value must be greater than zero")
-    private BigDecimal appraiserValue;
-    
-    @NotBlank(message = "Appraiser name is required")
-    private String appraiserName;
-    
-    @NotNull(message = "Valuation date is required")
-    private LocalDate valuationDate;
-    
-    @NotNull(message = "Loan to value ratio is required")
-    @DecimalMin(value = "0.01", message = "Loan to value ratio must be greater than zero")
-    private BigDecimal loanToValueRatio;
+    public static UpdateCollateralValuationCommandBuilder builder() {
+        return new UpdateCollateralValuationCommandBuilder();
+    }
 }

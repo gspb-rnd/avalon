@@ -21,10 +21,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AddCollateralCommand {
     
-    public static AddCollateralCommandBuilder builder() {
-        return new AddCollateralCommandBuilder();
-    }
-    
     private UUID loanApplicationId;
     
     @NotNull(message = "Collateral type is required")
@@ -61,5 +57,9 @@ public class AddCollateralCommand {
     
     public void setLoanApplicationId(UUID loanApplicationId) {
         this.loanApplicationId = loanApplicationId;
+    }
+    
+    public static AddCollateralCommandBuilder builder() {
+        return new AddCollateralCommandBuilder();
     }
 }

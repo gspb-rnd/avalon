@@ -20,10 +20,6 @@ import java.util.UUID;
 @Builder(toBuilder = true)
 public class ValidationRuleResultJpaEntity {
     
-    public static ValidationRuleResultJpaEntityBuilder builder() {
-        return new ValidationRuleResultJpaEntityBuilder();
-    }
-    
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -59,6 +55,10 @@ public class ValidationRuleResultJpaEntity {
     
     @Column(name = "overridden_by")
     private String overriddenBy;
+    
+    public static ValidationRuleResultJpaEntityBuilder builder() {
+        return new ValidationRuleResultJpaEntityBuilder();
+    }
     
     public boolean isPassed() {
         return passed != null && passed;
