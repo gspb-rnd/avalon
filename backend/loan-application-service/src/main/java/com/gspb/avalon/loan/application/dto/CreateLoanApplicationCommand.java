@@ -13,7 +13,7 @@ import java.util.UUID;
  * Command for creating a loan application.
  */
 @Data
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateLoanApplicationCommand {
@@ -28,4 +28,24 @@ public class CreateLoanApplicationCommand {
     private LoanType loanType;
     
     private String purpose;
+    
+    public UUID getClientId() {
+        return clientId;
+    }
+    
+    public String getAdvisorId() {
+        return advisorId;
+    }
+    
+    public LoanType getLoanType() {
+        return loanType;
+    }
+    
+    public String getPurpose() {
+        return purpose;
+    }
+    
+    public static CreateLoanApplicationCommandBuilder builder() {
+        return new CreateLoanApplicationCommandBuilder();
+    }
 }

@@ -127,4 +127,16 @@ public class LoanApplicationJpaEntity {
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
+    
+    public void setTerms(LoanTermsEmbeddable terms) {
+        this.terms = terms;
+    }
+    
+    public void setCollaterals(List<CollateralJpaEntity> collaterals) {
+        this.collaterals = collaterals;
+    }
+    
+    public void setValidationResults(List<ValidationRuleResultJpaEntity> validationResults) {
+        this.validationResults = validationResults;
+    }
 }
