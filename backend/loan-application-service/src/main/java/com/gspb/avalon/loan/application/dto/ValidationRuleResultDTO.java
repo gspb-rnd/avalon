@@ -10,10 +10,14 @@ import lombok.NoArgsConstructor;
  * Data Transfer Object for ValidationRuleResult.
  */
 @Data
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class ValidationRuleResultDTO {
+    
+    public static ValidationRuleResultDTOBuilder builder() {
+        return new ValidationRuleResultDTOBuilder();
+    }
     
     private String ruleId;
     private String ruleName;
