@@ -66,7 +66,10 @@ export class AvalonPipelineStack extends cdk.Stack {
             },
             commands: [
               'echo Installing Maven...',
-              'yum install -y maven',
+              'wget https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz',
+              'tar xzf apache-maven-3.9.6-bin.tar.gz',
+              'ln -s apache-maven-3.9.6/bin/mvn /usr/bin/mvn',
+              'mvn --version',
             ],
           },
           pre_build: {
