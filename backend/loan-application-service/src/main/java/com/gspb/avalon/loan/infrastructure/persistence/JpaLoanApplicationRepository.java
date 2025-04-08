@@ -48,6 +48,11 @@ public class JpaLoanApplicationRepository implements LoanApplicationRepository {
     }
     
     @Override
+    public void delete(LoanApplication loanApplication) {
+        springDataRepository.deleteById(loanApplication.getId());
+    }
+    
+    @Override
     public boolean existsById(UUID id) {
         return springDataRepository.existsById(id);
     }

@@ -20,6 +20,10 @@ import java.util.UUID;
 @Builder(toBuilder = true)
 public class ValidationRuleResultJpaEntity {
     
+    public static ValidationRuleResultJpaEntityBuilder builder() {
+        return new ValidationRuleResultJpaEntityBuilder();
+    }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
