@@ -318,32 +318,32 @@ export class AvalonPipelineStack extends cdk.Stack {
 
     const serviceRegistryService = ecs.FargateService.fromFargateServiceAttributes(this, 'ServiceRegistryService', {
       cluster,
-      serviceName: 'avalon-service-registry',
+      serviceName: 'AvalonInfrastructureStack-ServiceRegistryServiceEAE05843-fq6D3NpyFxAe',
     });
 
     const apiGatewayService = ecs.FargateService.fromFargateServiceAttributes(this, 'ApiGatewayService', {
       cluster,
-      serviceName: 'avalon-api-gateway',
+      serviceName: 'AvalonInfrastructureStack-ApiGatewayService075CCF21-dAiiU62MRfb7',
     });
 
     const clientService = ecs.FargateService.fromFargateServiceAttributes(this, 'ClientService', {
       cluster,
-      serviceName: 'avalon-client-service',
+      serviceName: 'AvalonInfrastructureStack-ClientService299188C5-G3DaZxcWlmPq',
     });
 
     const loanApplicationService = ecs.FargateService.fromFargateServiceAttributes(this, 'LoanApplicationService', {
       cluster,
-      serviceName: 'avalon-loan-application-service',
+      serviceName: 'AvalonInfrastructureStack-LoanApplicationServiceE6F9B850-FwrjWhlVIiHQ',
     });
 
     const documentService = ecs.FargateService.fromFargateServiceAttributes(this, 'DocumentService', {
       cluster,
-      serviceName: 'avalon-document-service',
+      serviceName: 'AvalonInfrastructureStack-DocumentServiceBACFC7CC-NFuIqmmyatvl',
     });
 
     const workflowService = ecs.FargateService.fromFargateServiceAttributes(this, 'WorkflowService', {
       cluster,
-      serviceName: 'avalon-workflow-service',
+      serviceName: 'AvalonInfrastructureStack-WorkflowService17CA2178-7V3VEogClns9',
     });
 
     deployStage.addAction(
