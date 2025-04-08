@@ -25,6 +25,26 @@ public class UpdateCollateralValuationCommand {
         this.loanApplicationId = loanApplicationId;
     }
     
+    public void setCollateralId(UUID collateralId) {
+        this.collateralId = collateralId;
+    }
+    
+    public BigDecimal getAppraiserValue() {
+        return appraiserValue;
+    }
+    
+    public String getAppraiserName() {
+        return appraiserName;
+    }
+    
+    public LocalDate getValuationDate() {
+        return valuationDate;
+    }
+    
+    public BigDecimal getLoanToValueRatio() {
+        return loanToValueRatio;
+    }
+    
     private UUID loanApplicationId;
     
     private UUID collateralId;

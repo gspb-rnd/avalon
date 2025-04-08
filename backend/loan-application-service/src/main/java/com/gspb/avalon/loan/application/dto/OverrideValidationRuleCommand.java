@@ -12,10 +12,30 @@ import java.util.UUID;
  * Command for overriding a validation rule.
  */
 @Data
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class OverrideValidationRuleCommand {
+    
+    public void setLoanApplicationId(UUID loanApplicationId) {
+        this.loanApplicationId = loanApplicationId;
+    }
+    
+    public UUID getLoanApplicationId() {
+        return loanApplicationId;
+    }
+    
+    public String getRuleId() {
+        return ruleId;
+    }
+    
+    public String getReason() {
+        return reason;
+    }
+    
+    public String getOverriddenBy() {
+        return overriddenBy;
+    }
     
     private UUID loanApplicationId;
     
