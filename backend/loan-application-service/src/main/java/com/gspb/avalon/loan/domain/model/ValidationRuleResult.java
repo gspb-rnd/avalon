@@ -32,6 +32,15 @@ public class ValidationRuleResult extends ValueObject {
     }
     
     /**
+     * Checks if the validation rule can be overridden.
+     *
+     * @return True if the rule can be overridden, false otherwise
+     */
+    public boolean isOverridable() {
+        return overridable;
+    }
+    
+    /**
      * Creates a new validation rule result.
      *
      * @param ruleId The rule ID

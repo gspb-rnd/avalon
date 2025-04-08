@@ -122,6 +122,15 @@ public class LoanApplication extends AggregateRoot<UUID> {
     }
     
     /**
+     * Gets the loan application status.
+     *
+     * @return The loan application status
+     */
+    public LoanStatus getStatus() {
+        return status;
+    }
+    
+    /**
      * Creates a new loan application.
      *
      * @param id The loan application ID
