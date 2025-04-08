@@ -26,7 +26,7 @@ public class DocumentStatusChangedEvent extends DomainEvent {
      * @param changedBy The user who changed the status
      */
     public DocumentStatusChangedEvent(UUID documentId, DocumentStatus oldStatus, DocumentStatus newStatus, String changedBy) {
-        super(UUID.randomUUID(), LocalDateTime.now());
+        super();
         this.documentId = documentId;
         this.oldStatus = oldStatus;
         this.newStatus = newStatus;

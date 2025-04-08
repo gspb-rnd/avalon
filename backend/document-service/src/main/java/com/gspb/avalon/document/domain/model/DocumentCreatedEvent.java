@@ -26,7 +26,7 @@ public class DocumentCreatedEvent extends DomainEvent {
      * @param createdBy The user who created the document
      */
     public DocumentCreatedEvent(UUID documentId, UUID packageId, DocumentType documentType, String createdBy) {
-        super(UUID.randomUUID(), LocalDateTime.now());
+        super();
         this.documentId = documentId;
         this.packageId = packageId;
         this.documentType = documentType;

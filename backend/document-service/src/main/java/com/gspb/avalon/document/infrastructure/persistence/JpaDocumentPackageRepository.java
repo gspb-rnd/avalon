@@ -46,6 +46,16 @@ public class JpaDocumentPackageRepository implements DocumentPackageRepository {
     }
     
     @Override
+    public boolean existsById(UUID id) {
+        return springDataRepository.existsById(id);
+    }
+    
+    @Override
+    public void delete(DocumentPackage documentPackage) {
+        springDataRepository.deleteById(documentPackage.getId());
+    }
+    
+    @Override
     public List<DocumentPackage> findByLoanApplicationId(UUID loanApplicationId) {
         return springDataRepository.findByLoanApplicationId(loanApplicationId).stream()
                 .map(mapper::toDomainModel)
