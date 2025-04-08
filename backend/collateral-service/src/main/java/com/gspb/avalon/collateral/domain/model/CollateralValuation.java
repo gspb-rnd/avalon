@@ -13,7 +13,7 @@ import java.util.UUID;
  * Aggregate root representing a collateral valuation.
  */
 @Getter
-public class CollateralValuation extends AggregateRoot {
+public class CollateralValuation extends AggregateRoot<UUID> {
     private UUID id;
     private UUID collateralId;
     private UUID loanApplicationId;
@@ -34,6 +34,7 @@ public class CollateralValuation extends AggregateRoot {
 
     public CollateralValuation(UUID id, UUID collateralId, UUID loanApplicationId, AssetClass assetClass, 
                               String assetDescription, ValuationMethod valuationMethod) {
+        super(id);
         this.id = id;
         this.collateralId = collateralId;
         this.loanApplicationId = loanApplicationId;

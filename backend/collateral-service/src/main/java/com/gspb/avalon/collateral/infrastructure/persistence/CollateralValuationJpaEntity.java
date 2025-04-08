@@ -24,7 +24,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class CollateralValuationJpaEntity {
     
     @Id
@@ -75,4 +75,144 @@ public class CollateralValuationJpaEntity {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "valuation_id")
     private List<RiskFactorJpaEntity> riskFactors = new ArrayList<>();
+    
+    public UUID getId() {
+        return id;
+    }
+    
+    public void setId(UUID id) {
+        this.id = id;
+    }
+    
+    public UUID getCollateralId() {
+        return collateralId;
+    }
+    
+    public void setCollateralId(UUID collateralId) {
+        this.collateralId = collateralId;
+    }
+    
+    public UUID getLoanApplicationId() {
+        return loanApplicationId;
+    }
+    
+    public void setLoanApplicationId(UUID loanApplicationId) {
+        this.loanApplicationId = loanApplicationId;
+    }
+    
+    public AssetClass getAssetClass() {
+        return assetClass;
+    }
+    
+    public void setAssetClass(AssetClass assetClass) {
+        this.assetClass = assetClass;
+    }
+    
+    public String getAssetDescription() {
+        return assetDescription;
+    }
+    
+    public void setAssetDescription(String assetDescription) {
+        this.assetDescription = assetDescription;
+    }
+    
+    public ValuationMethod getValuationMethod() {
+        return valuationMethod;
+    }
+    
+    public void setValuationMethod(ValuationMethod valuationMethod) {
+        this.valuationMethod = valuationMethod;
+    }
+    
+    public BigDecimal getEstimatedValue() {
+        return estimatedValue;
+    }
+    
+    public void setEstimatedValue(BigDecimal estimatedValue) {
+        this.estimatedValue = estimatedValue;
+    }
+    
+    public BigDecimal getHaircut() {
+        return haircut;
+    }
+    
+    public void setHaircut(BigDecimal haircut) {
+        this.haircut = haircut;
+    }
+    
+    public BigDecimal getAdjustedValue() {
+        return adjustedValue;
+    }
+    
+    public void setAdjustedValue(BigDecimal adjustedValue) {
+        this.adjustedValue = adjustedValue;
+    }
+    
+    public RiskLevel getRiskLevel() {
+        return riskLevel;
+    }
+    
+    public void setRiskLevel(RiskLevel riskLevel) {
+        this.riskLevel = riskLevel;
+    }
+    
+    public ValuationStatus getStatus() {
+        return status;
+    }
+    
+    public void setStatus(ValuationStatus status) {
+        this.status = status;
+    }
+    
+    public LocalDateTime getValuationDate() {
+        return valuationDate;
+    }
+    
+    public void setValuationDate(LocalDateTime valuationDate) {
+        this.valuationDate = valuationDate;
+    }
+    
+    public LocalDateTime getExpirationDate() {
+        return expirationDate;
+    }
+    
+    public void setExpirationDate(LocalDateTime expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+    
+    public String getValuatedBy() {
+        return valuatedBy;
+    }
+    
+    public void setValuatedBy(String valuatedBy) {
+        this.valuatedBy = valuatedBy;
+    }
+    
+    public List<ValuationHistoryJpaEntity> getValuationHistory() {
+        return valuationHistory;
+    }
+    
+    public void setValuationHistory(List<ValuationHistoryJpaEntity> valuationHistory) {
+        this.valuationHistory = valuationHistory;
+    }
+    
+    public List<ExternalValuationReferenceJpaEntity> getExternalReferences() {
+        return externalReferences;
+    }
+    
+    public void setExternalReferences(List<ExternalValuationReferenceJpaEntity> externalReferences) {
+        this.externalReferences = externalReferences;
+    }
+    
+    public List<RiskFactorJpaEntity> getRiskFactors() {
+        return riskFactors;
+    }
+    
+    public void setRiskFactors(List<RiskFactorJpaEntity> riskFactors) {
+        this.riskFactors = riskFactors;
+    }
+    
+    public static CollateralValuationJpaEntityBuilder builder() {
+        return new CollateralValuationJpaEntityBuilder();
+    }
 }
