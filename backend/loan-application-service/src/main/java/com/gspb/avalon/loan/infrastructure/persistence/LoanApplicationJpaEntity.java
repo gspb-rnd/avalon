@@ -83,4 +83,48 @@ public class LoanApplicationJpaEntity {
     public List<ValidationRuleResultJpaEntity> getValidationResults() {
         return validationResults;
     }
+    
+    public UUID getId() {
+        return id;
+    }
+    
+    public UUID getClientId() {
+        return clientId;
+    }
+    
+    public String getAdvisorId() {
+        return advisorId;
+    }
+    
+    public LoanType getLoanType() {
+        return loanType;
+    }
+    
+    public LoanStatus getStatus() {
+        return status;
+    }
+    
+    public String getPurpose() {
+        return purpose;
+    }
+    
+    public String getRejectionReason() {
+        return rejectionReason;
+    }
+    
+    public String getApprovalNotes() {
+        return approvalNotes;
+    }
+    
+    public UUID getDocumentPackageId() {
+        return documentPackageId;
+    }
+    
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+    
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
 }
