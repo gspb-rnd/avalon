@@ -22,10 +22,6 @@ import java.util.UUID;
 @Builder(toBuilder = true)
 public class CollateralJpaEntity {
     
-    public static CollateralJpaEntityBuilder builder() {
-        return new CollateralJpaEntityBuilder();
-    }
-    
     @Id
     private UUID id;
     
@@ -58,12 +54,16 @@ public class CollateralJpaEntity {
     @Column(name = "documentation_url")
     private String documentationUrl;
     
+    @Column(name = "verified")
+    private Boolean verified;
+    
+    public static CollateralJpaEntityBuilder builder() {
+        return new CollateralJpaEntityBuilder();
+    }
+    
     public String getDocumentationUrl() {
         return documentationUrl;
     }
-    
-    @Column(name = "verified")
-    private Boolean verified;
     
     public boolean isVerified() {
         return verified != null && verified;
