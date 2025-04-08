@@ -67,4 +67,16 @@ public class LoanApplicationJpaEntity {
     
     @OneToMany(mappedBy = "loanApplication", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ValidationRuleResultJpaEntity> validationResults = new ArrayList<>();
+    
+    public LoanTermsEmbeddable getTerms() {
+        return terms;
+    }
+    
+    public List<CollateralJpaEntity> getCollaterals() {
+        return collaterals;
+    }
+    
+    public List<ValidationRuleResultJpaEntity> getValidationResults() {
+        return validationResults;
+    }
 }

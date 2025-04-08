@@ -21,7 +21,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class LoanTermsEmbeddable {
     
     @Column(name = "amount", precision = 19, scale = 2)
@@ -58,4 +58,52 @@ public class LoanTermsEmbeddable {
     
     @Column(name = "early_repayment_fee", precision = 19, scale = 2)
     private BigDecimal earlyRepaymentFee;
+    
+    public static LoanTermsEmbeddableBuilder builder() {
+        return new LoanTermsEmbeddableBuilder();
+    }
+    
+    public BigDecimal getAmount() {
+        return amount;
+    }
+    
+    public String getCurrency() {
+        return currency;
+    }
+    
+    public Integer getTermInMonths() {
+        return termInMonths;
+    }
+    
+    public BigDecimal getInterestRate() {
+        return interestRate;
+    }
+    
+    public InterestRateType getInterestRateType() {
+        return interestRateType;
+    }
+    
+    public PaymentFrequency getPaymentFrequency() {
+        return paymentFrequency;
+    }
+    
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+    
+    public LocalDate getMaturityDate() {
+        return maturityDate;
+    }
+    
+    public BigDecimal getOriginationFee() {
+        return originationFee;
+    }
+    
+    public boolean isEarlyRepaymentAllowed() {
+        return earlyRepaymentAllowed != null && earlyRepaymentAllowed;
+    }
+    
+    public BigDecimal getEarlyRepaymentFee() {
+        return earlyRepaymentFee;
+    }
 }
