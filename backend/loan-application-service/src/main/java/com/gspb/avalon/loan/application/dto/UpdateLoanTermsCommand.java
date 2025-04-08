@@ -23,9 +23,42 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UpdateLoanTermsCommand {
     
-    public static UpdateLoanTermsCommandBuilder builder() {
-        return new UpdateLoanTermsCommandBuilder();
-    }
+    private UUID loanApplicationId;
+    
+    @NotNull(message = "Amount is required")
+    @DecimalMin(value = "0.01", message = "Amount must be greater than zero")
+    private BigDecimal amount;
+    
+    @NotNull(message = "Currency is required")
+    private String currency;
+    
+    @NotNull(message = "Term in months is required")
+    @Min(value = 1, message = "Term must be at least 1 month")
+    private Integer termInMonths;
+    
+    @NotNull(message = "Interest rate is required")
+    @DecimalMin(value = "0.01", message = "Interest rate must be greater than zero")
+    private BigDecimal interestRate;
+    
+    @NotNull(message = "Interest rate type is required")
+    private InterestRateType interestRateType;
+    
+    @NotNull(message = "Payment frequency is required")
+    private PaymentFrequency paymentFrequency;
+    
+    @NotNull(message = "Start date is required")
+    private LocalDate startDate;
+    
+    @NotNull(message = "Maturity date is required")
+    private LocalDate maturityDate;
+    
+    @NotNull(message = "Origination fee is required")
+    @DecimalMin(value = "0.0", message = "Origination fee must be non-negative")
+    private BigDecimal originationFee;
+    
+    private boolean earlyRepaymentAllowed;
+    
+    private BigDecimal earlyRepaymentFee;
     
     public void setLoanApplicationId(UUID loanApplicationId) {
         this.loanApplicationId = loanApplicationId;
@@ -79,40 +112,7 @@ public class UpdateLoanTermsCommand {
         return earlyRepaymentFee;
     }
     
-    private UUID loanApplicationId;
-    
-    @NotNull(message = "Amount is required")
-    @DecimalMin(value = "0.01", message = "Amount must be greater than zero")
-    private BigDecimal amount;
-    
-    @NotNull(message = "Currency is required")
-    private String currency;
-    
-    @NotNull(message = "Term in months is required")
-    @Min(value = 1, message = "Term must be at least 1 month")
-    private Integer termInMonths;
-    
-    @NotNull(message = "Interest rate is required")
-    @DecimalMin(value = "0.01", message = "Interest rate must be greater than zero")
-    private BigDecimal interestRate;
-    
-    @NotNull(message = "Interest rate type is required")
-    private InterestRateType interestRateType;
-    
-    @NotNull(message = "Payment frequency is required")
-    private PaymentFrequency paymentFrequency;
-    
-    @NotNull(message = "Start date is required")
-    private LocalDate startDate;
-    
-    @NotNull(message = "Maturity date is required")
-    private LocalDate maturityDate;
-    
-    @NotNull(message = "Origination fee is required")
-    @DecimalMin(value = "0.0", message = "Origination fee must be non-negative")
-    private BigDecimal originationFee;
-    
-    private boolean earlyRepaymentAllowed;
-    
-    private BigDecimal earlyRepaymentFee;
+    public static UpdateLoanTermsCommandBuilder builder() {
+        return new UpdateLoanTermsCommandBuilder();
+    }
 }

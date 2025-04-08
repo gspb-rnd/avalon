@@ -17,9 +17,16 @@ import java.util.UUID;
 @AllArgsConstructor
 public class OverrideValidationRuleCommand {
     
-    public static OverrideValidationRuleCommandBuilder builder() {
-        return new OverrideValidationRuleCommandBuilder();
-    }
+    private UUID loanApplicationId;
+    
+    @NotBlank(message = "Rule ID is required")
+    private String ruleId;
+    
+    @NotBlank(message = "Override reason is required")
+    private String reason;
+    
+    @NotBlank(message = "Overridden by is required")
+    private String overriddenBy;
     
     public void setLoanApplicationId(UUID loanApplicationId) {
         this.loanApplicationId = loanApplicationId;
@@ -41,14 +48,7 @@ public class OverrideValidationRuleCommand {
         return overriddenBy;
     }
     
-    private UUID loanApplicationId;
-    
-    @NotBlank(message = "Rule ID is required")
-    private String ruleId;
-    
-    @NotBlank(message = "Override reason is required")
-    private String reason;
-    
-    @NotBlank(message = "Overridden by is required")
-    private String overriddenBy;
+    public static OverrideValidationRuleCommandBuilder builder() {
+        return new OverrideValidationRuleCommandBuilder();
+    }
 }
