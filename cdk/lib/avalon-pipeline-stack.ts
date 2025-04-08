@@ -171,16 +171,21 @@ export class AvalonPipelineStack extends cdk.Stack {
             },
             commands: [
               'echo Installing dependencies...',
+              'echo "Current directory: $(pwd)"',
+              'ls -la',
               'cd frontend/shared-components',
               'npm install --legacy-peer-deps',
               'npm run build',
               'cd ../advisor-portal',
               'npm install --legacy-peer-deps',
+              'cd ../../',
             ],
           },
           build: {
             commands: [
               'echo Building the frontend...',
+              'echo "Current directory: $(pwd)"',
+              'ls -la',
               'cd frontend/advisor-portal',
               'ls -la',
               'REACT_APP_API_URL=https://api.avalon.example.com npm run build',
