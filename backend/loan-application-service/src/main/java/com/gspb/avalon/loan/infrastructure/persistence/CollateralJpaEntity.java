@@ -65,6 +65,10 @@ public class CollateralJpaEntity {
         return documentationUrl;
     }
     
+    public void setDocumentationUrl(String documentationUrl) {
+        this.documentationUrl = documentationUrl;
+    }
+    
     public boolean isVerified() {
         return verified != null && verified;
     }
@@ -73,39 +77,79 @@ public class CollateralJpaEntity {
         return verified;
     }
     
+    public void setVerified(Boolean verified) {
+        this.verified = verified;
+    }
+    
     public BigDecimal getAppraiserValue() {
         return appraiserValue;
+    }
+    
+    public void setAppraiserValue(BigDecimal appraiserValue) {
+        this.appraiserValue = appraiserValue;
     }
     
     public BigDecimal getLoanToValueRatio() {
         return loanToValueRatio;
     }
     
+    public void setLoanToValueRatio(BigDecimal loanToValueRatio) {
+        this.loanToValueRatio = loanToValueRatio;
+    }
+    
     public LocalDate getValuationDate() {
         return valuationDate;
+    }
+    
+    public void setValuationDate(LocalDate valuationDate) {
+        this.valuationDate = valuationDate;
     }
     
     public String getAppraiserName() {
         return appraiserName;
     }
     
+    public void setAppraiserName(String appraiserName) {
+        this.appraiserName = appraiserName;
+    }
+    
     public UUID getId() {
         return id;
+    }
+    
+    public void setId(UUID id) {
+        this.id = id;
     }
     
     public LoanApplicationJpaEntity getLoanApplication() {
         return loanApplication;
     }
     
+    public void setLoanApplication(LoanApplicationJpaEntity loanApplication) {
+        this.loanApplication = loanApplication;
+    }
+    
     public CollateralType getType() {
         return type;
+    }
+    
+    public void setType(CollateralType type) {
+        this.type = type;
     }
     
     public String getDescription() {
         return description;
     }
     
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
     public BigDecimal getEstimatedValue() {
         return estimatedValue;
+    }
+    
+    public void setEstimatedValue(BigDecimal estimatedValue) {
+        this.estimatedValue = estimatedValue;
     }
 }

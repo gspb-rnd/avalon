@@ -72,40 +72,92 @@ public class ValidationRuleResultJpaEntity {
         return overridden != null && overridden;
     }
     
+    public UUID getId() {
+        return id;
+    }
+    
+    public void setId(UUID id) {
+        this.id = id;
+    }
+    
+    public LoanApplicationJpaEntity getLoanApplication() {
+        return loanApplication;
+    }
+    
+    public void setLoanApplication(LoanApplicationJpaEntity loanApplication) {
+        this.loanApplication = loanApplication;
+    }
+    
     public String getRuleId() {
         return ruleId;
+    }
+    
+    public void setRuleId(String ruleId) {
+        this.ruleId = ruleId;
     }
     
     public String getRuleName() {
         return ruleName;
     }
     
+    public void setRuleName(String ruleName) {
+        this.ruleName = ruleName;
+    }
+    
     public Boolean getPassed() {
         return passed;
+    }
+    
+    public void setPassed(Boolean passed) {
+        this.passed = passed;
     }
     
     public String getMessage() {
         return message;
     }
     
+    public void setMessage(String message) {
+        this.message = message;
+    }
+    
     public ValidationSeverity getSeverity() {
         return severity;
+    }
+    
+    public void setSeverity(ValidationSeverity severity) {
+        this.severity = severity;
     }
     
     public Boolean getOverridable() {
         return overridable;
     }
     
+    public void setOverridable(Boolean overridable) {
+        this.overridable = overridable;
+    }
+    
     public Boolean getOverridden() {
         return overridden;
+    }
+    
+    public void setOverridden(Boolean overridden) {
+        this.overridden = overridden;
     }
     
     public String getOverrideReason() {
         return overrideReason;
     }
     
+    public void setOverrideReason(String overrideReason) {
+        this.overrideReason = overrideReason;
+    }
+    
     public String getOverriddenBy() {
         return overriddenBy;
+    }
+    
+    public void setOverriddenBy(String overriddenBy) {
+        this.overriddenBy = overriddenBy;
     }
     
     /**

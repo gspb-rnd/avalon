@@ -67,36 +67,72 @@ public class LoanTermsEmbeddable {
         return amount;
     }
     
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+    
     public String getCurrency() {
         return currency;
+    }
+    
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
     
     public Integer getTermInMonths() {
         return termInMonths;
     }
     
+    public void setTermInMonths(Integer termInMonths) {
+        this.termInMonths = termInMonths;
+    }
+    
     public BigDecimal getInterestRate() {
         return interestRate;
+    }
+    
+    public void setInterestRate(BigDecimal interestRate) {
+        this.interestRate = interestRate;
     }
     
     public InterestRateType getInterestRateType() {
         return interestRateType;
     }
     
+    public void setInterestRateType(InterestRateType interestRateType) {
+        this.interestRateType = interestRateType;
+    }
+    
     public PaymentFrequency getPaymentFrequency() {
         return paymentFrequency;
+    }
+    
+    public void setPaymentFrequency(PaymentFrequency paymentFrequency) {
+        this.paymentFrequency = paymentFrequency;
     }
     
     public LocalDate getStartDate() {
         return startDate;
     }
     
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+    
     public LocalDate getMaturityDate() {
         return maturityDate;
     }
     
+    public void setMaturityDate(LocalDate maturityDate) {
+        this.maturityDate = maturityDate;
+    }
+    
     public BigDecimal getOriginationFee() {
         return originationFee;
+    }
+    
+    public void setOriginationFee(BigDecimal originationFee) {
+        this.originationFee = originationFee;
     }
     
     public boolean isEarlyRepaymentAllowed() {
@@ -107,7 +143,15 @@ public class LoanTermsEmbeddable {
         return earlyRepaymentAllowed;
     }
     
+    public void setEarlyRepaymentAllowed(Boolean earlyRepaymentAllowed) {
+        this.earlyRepaymentAllowed = earlyRepaymentAllowed;
+    }
+    
     public BigDecimal getEarlyRepaymentFee() {
         return earlyRepaymentFee;
+    }
+    
+    public void setEarlyRepaymentFee(BigDecimal earlyRepaymentFee) {
+        this.earlyRepaymentFee = earlyRepaymentFee;
     }
 }
