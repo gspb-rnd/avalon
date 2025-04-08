@@ -27,4 +27,28 @@ public class RiskFactor extends ValueObject {
         this.impact = impact;
         this.identifiedAt = identifiedAt;
     }
+    
+    public UUID getId() {
+        return id;
+    }
+    
+    public UUID getValuationId() {
+        return valuationId;
+    }
+    
+    public String getFactorName() {
+        return factorName;
+    }
+    
+    public String getDescription() {
+        return description;
+    }
+    
+    public RiskLevel getImpact() {
+        return impact;
+    }
+    
+    public LocalDateTime getIdentifiedAt() {
+        return identifiedAt;
+    }
 }

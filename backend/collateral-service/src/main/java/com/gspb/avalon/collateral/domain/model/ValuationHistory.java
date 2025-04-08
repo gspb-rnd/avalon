@@ -35,4 +35,40 @@ public class ValuationHistory extends ValueObject {
         this.valuationDate = valuationDate;
         this.valuatedBy = valuatedBy;
     }
+    
+    public UUID getId() {
+        return id;
+    }
+    
+    public UUID getValuationId() {
+        return valuationId;
+    }
+    
+    public BigDecimal getEstimatedValue() {
+        return estimatedValue;
+    }
+    
+    public BigDecimal getHaircut() {
+        return haircut;
+    }
+    
+    public BigDecimal getAdjustedValue() {
+        return adjustedValue;
+    }
+    
+    public RiskLevel getRiskLevel() {
+        return riskLevel;
+    }
+    
+    public ValuationMethod getValuationMethod() {
+        return valuationMethod;
+    }
+    
+    public LocalDateTime getValuationDate() {
+        return valuationDate;
+    }
+    
+    public String getValuatedBy() {
+        return valuatedBy;
+    }
 }

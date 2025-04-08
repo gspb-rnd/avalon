@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -18,7 +18,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class RiskFactorJpaEntity {
     
     @Id
@@ -35,4 +35,56 @@ public class RiskFactorJpaEntity {
     private RiskLevel impact;
     
     private LocalDateTime identifiedAt;
+    
+    public UUID getId() {
+        return id;
+    }
+    
+    public void setId(UUID id) {
+        this.id = id;
+    }
+    
+    public UUID getValuationId() {
+        return valuationId;
+    }
+    
+    public void setValuationId(UUID valuationId) {
+        this.valuationId = valuationId;
+    }
+    
+    public String getFactorName() {
+        return factorName;
+    }
+    
+    public void setFactorName(String factorName) {
+        this.factorName = factorName;
+    }
+    
+    public String getDescription() {
+        return description;
+    }
+    
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+    public RiskLevel getImpact() {
+        return impact;
+    }
+    
+    public void setImpact(RiskLevel impact) {
+        this.impact = impact;
+    }
+    
+    public LocalDateTime getIdentifiedAt() {
+        return identifiedAt;
+    }
+    
+    public void setIdentifiedAt(LocalDateTime identifiedAt) {
+        this.identifiedAt = identifiedAt;
+    }
+    
+    public static RiskFactorJpaEntityBuilder builder() {
+        return new RiskFactorJpaEntityBuilder();
+    }
 }

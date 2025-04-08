@@ -27,4 +27,28 @@ public class ExternalValuationReference extends ValueObject {
         this.referenceUrl = referenceUrl;
         this.createdAt = createdAt;
     }
+    
+    public UUID getId() {
+        return id;
+    }
+    
+    public UUID getValuationId() {
+        return valuationId;
+    }
+    
+    public String getSourceSystem() {
+        return sourceSystem;
+    }
+    
+    public String getReferenceId() {
+        return referenceId;
+    }
+    
+    public String getReferenceUrl() {
+        return referenceUrl;
+    }
+    
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 }

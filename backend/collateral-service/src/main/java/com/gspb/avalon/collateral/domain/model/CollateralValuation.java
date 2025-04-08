@@ -113,4 +113,73 @@ public class CollateralValuation extends AggregateRoot<UUID> {
     public boolean isExpired() {
         return expirationDate != null && LocalDateTime.now().isAfter(expirationDate);
     }
+    
+    @Override
+    public UUID getId() {
+        return id;
+    }
+    
+    public UUID getCollateralId() {
+        return collateralId;
+    }
+    
+    public UUID getLoanApplicationId() {
+        return loanApplicationId;
+    }
+    
+    public AssetClass getAssetClass() {
+        return assetClass;
+    }
+    
+    public String getAssetDescription() {
+        return assetDescription;
+    }
+    
+    public ValuationMethod getValuationMethod() {
+        return valuationMethod;
+    }
+    
+    public BigDecimal getEstimatedValue() {
+        return estimatedValue;
+    }
+    
+    public BigDecimal getHaircut() {
+        return haircut;
+    }
+    
+    public BigDecimal getAdjustedValue() {
+        return adjustedValue;
+    }
+    
+    public RiskLevel getRiskLevel() {
+        return riskLevel;
+    }
+    
+    public ValuationStatus getStatus() {
+        return status;
+    }
+    
+    public LocalDateTime getValuationDate() {
+        return valuationDate;
+    }
+    
+    public LocalDateTime getExpirationDate() {
+        return expirationDate;
+    }
+    
+    public String getValuatedBy() {
+        return valuatedBy;
+    }
+    
+    public List<ValuationHistory> getValuationHistory() {
+        return valuationHistory;
+    }
+    
+    public List<ExternalValuationReference> getExternalReferences() {
+        return externalReferences;
+    }
+    
+    public List<RiskFactor> getRiskFactors() {
+        return riskFactors;
+    }
 }
