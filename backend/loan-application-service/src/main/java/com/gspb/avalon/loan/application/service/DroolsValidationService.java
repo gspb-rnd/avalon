@@ -45,9 +45,9 @@ public class DroolsValidationService {
             
             kieSession.dispose();
             
-            log.info("Loan application validation completed with {} rule results", results.size());
+            System.out.println("Loan application validation completed with " + results.size() + " rule results");
         } catch (IOException e) {
-            log.error("Error during loan application validation", e);
+            System.err.println("Error during loan application validation: " + e.getMessage());
             results.add(new ValidationRuleResult(
                     "SYSTEM_ERROR",
                     "System Error",
