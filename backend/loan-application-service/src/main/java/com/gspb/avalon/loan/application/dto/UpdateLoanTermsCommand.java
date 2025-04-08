@@ -18,10 +18,14 @@ import java.util.UUID;
  * Command for updating loan terms.
  */
 @Data
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateLoanTermsCommand {
+    
+    public void setLoanApplicationId(UUID loanApplicationId) {
+        this.loanApplicationId = loanApplicationId;
+    }
     
     private UUID loanApplicationId;
     

@@ -16,10 +16,14 @@ import java.util.UUID;
  * Command for updating a collateral valuation.
  */
 @Data
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateCollateralValuationCommand {
+    
+    public void setLoanApplicationId(UUID loanApplicationId) {
+        this.loanApplicationId = loanApplicationId;
+    }
     
     private UUID loanApplicationId;
     

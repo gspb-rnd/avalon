@@ -26,7 +26,7 @@ public class LoanApplicationStatusChangedEvent extends DomainEvent {
      * @param changedBy The user who changed the status
      */
     public LoanApplicationStatusChangedEvent(UUID loanApplicationId, LoanStatus oldStatus, LoanStatus newStatus, String changedBy) {
-        super(UUID.randomUUID(), LocalDateTime.now());
+        super();
         this.loanApplicationId = loanApplicationId;
         this.oldStatus = oldStatus;
         this.newStatus = newStatus;

@@ -54,4 +54,8 @@ public class AddCollateralCommand {
     public String getDocumentationUrl() {
         return documentationUrl;
     }
+    
+    public void setLoanApplicationId(UUID loanApplicationId) {
+        this.loanApplicationId = loanApplicationId;
+    }
 }
