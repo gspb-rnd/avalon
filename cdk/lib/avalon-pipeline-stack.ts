@@ -156,6 +156,18 @@ export class AvalonPipelineStack extends cdk.Stack {
         resources: ['*'],
       })
     );
+    
+    backendBuildProject.addToRolePolicy(
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: [
+          'secretsmanager:GetSecretValue',
+        ],
+        resources: [
+          `arn:aws:secretsmanager:${this.region}:${this.account}:secret:dockerhub-credentials*`,
+        ],
+      })
+    );
 
     const backendBuildAction = new codepipeline_actions.CodeBuildAction({
       actionName: 'BuildBackend',
