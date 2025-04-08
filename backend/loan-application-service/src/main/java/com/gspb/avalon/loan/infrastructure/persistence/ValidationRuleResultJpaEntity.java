@@ -17,7 +17,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class ValidationRuleResultJpaEntity {
     
     @Id
@@ -55,4 +55,16 @@ public class ValidationRuleResultJpaEntity {
     
     @Column(name = "overridden_by")
     private String overriddenBy;
+    
+    public boolean isPassed() {
+        return passed != null && passed;
+    }
+    
+    public boolean isOverridable() {
+        return overridable != null && overridable;
+    }
+    
+    public boolean isOverridden() {
+        return overridden != null && overridden;
+    }
 }

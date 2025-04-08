@@ -54,6 +54,14 @@ public class CollateralJpaEntity {
     @Column(name = "documentation_url")
     private String documentationUrl;
     
+    public String getDocumentationUrl() {
+        return documentationUrl;
+    }
+    
     @Column(name = "verified")
     private Boolean verified;
+    
+    public boolean isVerified() {
+        return verified != null && verified;
+    }
 }
