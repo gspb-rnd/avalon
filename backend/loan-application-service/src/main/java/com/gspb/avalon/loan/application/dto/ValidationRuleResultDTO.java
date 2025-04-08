@@ -15,10 +15,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ValidationRuleResultDTO {
     
-    public static ValidationRuleResultDTOBuilder builder() {
-        return new ValidationRuleResultDTOBuilder();
-    }
-    
     private String ruleId;
     private String ruleName;
     private boolean passed;
@@ -29,4 +25,8 @@ public class ValidationRuleResultDTO {
     private String overrideReason;
     private String overriddenBy;
     private boolean effectivelyPassed;
+    
+    public static ValidationRuleResultDTOBuilder builder() {
+        return new ValidationRuleResultDTOBuilder();
+    }
 }
