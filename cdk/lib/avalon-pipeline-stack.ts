@@ -182,6 +182,7 @@ export class AvalonPipelineStack extends cdk.Stack {
             commands: [
               'echo Building the frontend...',
               'cd frontend/advisor-portal',
+              'ls -la',
               'REACT_APP_API_URL=https://api.avalon.example.com npm run build',
             ],
           },
