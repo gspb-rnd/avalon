@@ -76,7 +76,7 @@ export class AvalonPipelineStack extends cdk.Stack {
           pre_build: {
             commands: [
               'echo Logging in to Docker Hub...',
-              'aws secretsmanager get-secret-value --secret-id dockerhub-credentials --query SecretString --output text | jq -r \'.password\' | docker login -u devin-ai-integration --password-stdin',
+              'aws secretsmanager get-secret-value --secret-id dockerhub-credentials-ncQ0wL --query SecretString --output text | jq -r \'.password\' | docker login -u devin-ai-integration --password-stdin',
               'echo Logging in to Amazon ECR...',
               'aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com',
               'cd backend',
