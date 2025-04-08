@@ -164,7 +164,7 @@ export class AvalonPipelineStack extends cdk.Stack {
           'secretsmanager:GetSecretValue',
         ],
         resources: [
-          `arn:aws:secretsmanager:${this.region}:${this.account}:secret:dockerhub-credentials*`,
+          `arn:aws:secretsmanager:${this.region}:${this.account}:secret:dockerhub-credentials-ncQ0wL`,
         ],
       })
     );
