@@ -72,4 +72,16 @@ public class JpaCollateralValuationRepository implements CollateralValuationRepo
     public boolean existsById(UUID id) {
         return repository.existsById(id);
     }
+    
+    @Override
+    public List<CollateralValuation> findAll() {
+        return repository.findAll().stream()
+                .map(mapper::toDomain)
+                .collect(Collectors.toList());
+    }
+    
+    @Override
+    public void delete(CollateralValuation collateralValuation) {
+        repository.deleteById(collateralValuation.getId());
+    }
 }
