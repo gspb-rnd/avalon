@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class ErrorResponse {
     private LocalDateTime timestamp;
     private int status;
@@ -59,5 +59,9 @@ public class ErrorResponse {
     
     public void setPath(String path) {
         this.path = path;
+    }
+    
+    public static ErrorResponseBuilder builder() {
+        return new ErrorResponseBuilder();
     }
 }
