@@ -15,7 +15,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class RiskFactorDTO {
     private UUID id;
     private UUID valuationId;
@@ -70,5 +70,9 @@ public class RiskFactorDTO {
     
     public void setIdentifiedAt(LocalDateTime identifiedAt) {
         this.identifiedAt = identifiedAt;
+    }
+    
+    public static RiskFactorDTOBuilder builder() {
+        return new RiskFactorDTOBuilder();
     }
 }
