@@ -48,6 +48,11 @@ public class JpaLoanApplicationRepository implements LoanApplicationRepository {
     }
     
     @Override
+    public boolean existsById(UUID id) {
+        return springDataRepository.existsById(id);
+    }
+    
+    @Override
     public List<LoanApplication> findByClientId(UUID clientId) {
         return springDataRepository.findByClientId(clientId).stream()
                 .map(mapper::toDomainModel)
