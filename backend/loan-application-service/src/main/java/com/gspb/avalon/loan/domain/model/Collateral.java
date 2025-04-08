@@ -86,4 +86,94 @@ public class Collateral extends Entity<UUID> {
     public BigDecimal getCurrentValue() {
         return this.appraiserValue != null ? this.appraiserValue : this.estimatedValue;
     }
+    
+    /**
+     * Gets the loan application ID.
+     *
+     * @return The loan application ID
+     */
+    public UUID getLoanApplicationId() {
+        return loanApplicationId;
+    }
+    
+    /**
+     * Gets the collateral type.
+     *
+     * @return The collateral type
+     */
+    public CollateralType getType() {
+        return type;
+    }
+    
+    /**
+     * Gets the collateral description.
+     *
+     * @return The collateral description
+     */
+    public String getDescription() {
+        return description;
+    }
+    
+    /**
+     * Gets the estimated value.
+     *
+     * @return The estimated value
+     */
+    public BigDecimal getEstimatedValue() {
+        return estimatedValue;
+    }
+    
+    /**
+     * Gets the appraiser value.
+     *
+     * @return The appraiser value
+     */
+    public BigDecimal getAppraiserValue() {
+        return appraiserValue;
+    }
+    
+    /**
+     * Gets the loan-to-value ratio.
+     *
+     * @return The loan-to-value ratio
+     */
+    public BigDecimal getLoanToValueRatio() {
+        return loanToValueRatio;
+    }
+    
+    /**
+     * Gets the valuation date.
+     *
+     * @return The valuation date
+     */
+    public LocalDate getValuationDate() {
+        return valuationDate;
+    }
+    
+    /**
+     * Gets the appraiser name.
+     *
+     * @return The appraiser name
+     */
+    public String getAppraiserName() {
+        return appraiserName;
+    }
+    
+    /**
+     * Gets the documentation URL.
+     *
+     * @return The documentation URL
+     */
+    public String getDocumentationUrl() {
+        return documentationUrl;
+    }
+    
+    /**
+     * Checks if the collateral is verified.
+     *
+     * @return True if the collateral is verified, false otherwise
+     */
+    public boolean isVerified() {
+        return verified;
+    }
 }
