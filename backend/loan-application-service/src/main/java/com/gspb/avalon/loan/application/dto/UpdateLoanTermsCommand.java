@@ -27,6 +27,54 @@ public class UpdateLoanTermsCommand {
         this.loanApplicationId = loanApplicationId;
     }
     
+    public UUID getLoanApplicationId() {
+        return loanApplicationId;
+    }
+    
+    public BigDecimal getAmount() {
+        return amount;
+    }
+    
+    public String getCurrency() {
+        return currency;
+    }
+    
+    public Integer getTermInMonths() {
+        return termInMonths;
+    }
+    
+    public BigDecimal getInterestRate() {
+        return interestRate;
+    }
+    
+    public InterestRateType getInterestRateType() {
+        return interestRateType;
+    }
+    
+    public PaymentFrequency getPaymentFrequency() {
+        return paymentFrequency;
+    }
+    
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+    
+    public LocalDate getMaturityDate() {
+        return maturityDate;
+    }
+    
+    public BigDecimal getOriginationFee() {
+        return originationFee;
+    }
+    
+    public boolean isEarlyRepaymentAllowed() {
+        return earlyRepaymentAllowed;
+    }
+    
+    public BigDecimal getEarlyRepaymentFee() {
+        return earlyRepaymentFee;
+    }
+    
     private UUID loanApplicationId;
     
     @NotNull(message = "Amount is required")
