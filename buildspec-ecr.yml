@@ -56,9 +56,9 @@ phases:
       - echo '{"ImageURI":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-workflow-service:latest"}' > workflow-service-imageDefinitions.json
 artifacts:
   files:
-    - backend/service-registry-imageDefinitions.json
-    - backend/api-gateway-imageDefinitions.json
-    - backend/client-service-imageDefinitions.json
-    - backend/loan-application-service-imageDefinitions.json
-    - backend/document-service-imageDefinitions.json
-    - backend/workflow-service-imageDefinitions.json
+    - service-registry-imageDefinitions.json
+    - api-gateway-imageDefinitions.json
+    - client-service-imageDefinitions.json
+    - loan-application-service-imageDefinitions.json
+    - document-service-imageDefinitions.json
+    - workflow-service-imageDefinitions.json
