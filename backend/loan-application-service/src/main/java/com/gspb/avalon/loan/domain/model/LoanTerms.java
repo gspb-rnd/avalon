@@ -25,6 +25,105 @@ public class LoanTerms extends ValueObject {
     private final BigDecimal earlyRepaymentFee;
     
     /**
+     * Gets the loan amount.
+     *
+     * @return The loan amount
+     */
+    public BigDecimal getAmount() {
+        return amount;
+    }
+    
+    /**
+     * Gets the loan currency.
+     *
+     * @return The loan currency
+     */
+    public String getCurrency() {
+        return currency;
+    }
+    
+    /**
+     * Gets the loan term in months.
+     *
+     * @return The loan term in months
+     */
+    public int getTermInMonths() {
+        return termInMonths;
+    }
+    
+    /**
+     * Gets the interest rate.
+     *
+     * @return The interest rate
+     */
+    public BigDecimal getInterestRate() {
+        return interestRate;
+    }
+    
+    /**
+     * Gets the interest rate type.
+     *
+     * @return The interest rate type
+     */
+    public InterestRateType getInterestRateType() {
+        return interestRateType;
+    }
+    
+    /**
+     * Gets the payment frequency.
+     *
+     * @return The payment frequency
+     */
+    public PaymentFrequency getPaymentFrequency() {
+        return paymentFrequency;
+    }
+    
+    /**
+     * Gets the start date.
+     *
+     * @return The start date
+     */
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+    
+    /**
+     * Gets the maturity date.
+     *
+     * @return The maturity date
+     */
+    public LocalDate getMaturityDate() {
+        return maturityDate;
+    }
+    
+    /**
+     * Gets the origination fee.
+     *
+     * @return The origination fee
+     */
+    public BigDecimal getOriginationFee() {
+        return originationFee;
+    }
+    
+    /**
+     * Checks if early repayment is allowed.
+     *
+     * @return True if early repayment is allowed, false otherwise
+     */
+    public boolean isEarlyRepaymentAllowed() {
+        return earlyRepaymentAllowed;
+    }
+    
+    /**
+     * Gets the early repayment fee.
+     *
+     * @return The early repayment fee
+     */
+    public BigDecimal getEarlyRepaymentFee() {
+        return earlyRepaymentFee;
+    }
+    
+    /**
      * Creates new loan terms.
      *
      * @param amount The loan amount

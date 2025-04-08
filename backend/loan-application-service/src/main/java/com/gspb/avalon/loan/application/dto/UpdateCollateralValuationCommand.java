@@ -45,6 +45,14 @@ public class UpdateCollateralValuationCommand {
         return loanToValueRatio;
     }
     
+    public UUID getCollateralId() {
+        return collateralId;
+    }
+    
+    public UUID getLoanApplicationId() {
+        return loanApplicationId;
+    }
+    
     private UUID loanApplicationId;
     
     private UUID collateralId;

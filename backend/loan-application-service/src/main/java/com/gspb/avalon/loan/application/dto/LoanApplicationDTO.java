@@ -16,10 +16,14 @@ import java.util.UUID;
  * Data Transfer Object for LoanApplication.
  */
 @Data
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoanApplicationDTO {
+    
+    public static LoanApplicationDTOBuilder builder() {
+        return new LoanApplicationDTOBuilder();
+    }
     
     private UUID id;
     private UUID clientId;
