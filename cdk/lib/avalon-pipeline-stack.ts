@@ -254,43 +254,38 @@ export class AvalonPipelineStack extends cdk.Stack {
       stageName: 'Deploy',
     });
 
-    const serviceRegistryRepo = new ecr.Repository(this, 'ServiceRegistryRepo', {
-      repositoryName: 'avalon-service-registry',
-      removalPolicy: cdk.RemovalPolicy.RETAIN,
+    const serviceRegistryRepo = ecr.Repository.fromRepositoryName(
+      this, 'ServiceRegistryRepo', 'avalon-service-registry'
+    );
+
+    const apiGatewayRepo = ecr.Repository.fromRepositoryName(
+      this, 'ApiGatewayRepo', 'avalon-api-gateway'
+    );
+
+    const clientServiceRepo = ecr.Repository.fromRepositoryName(
+      this, 'ClientServiceRepo', 'avalon-client-service'
+    );
+
+    const loanApplicationServiceRepo = ecr.Repository.fromRepositoryName(
+      this, 'LoanApplicationServiceRepo', 'avalon-loan-application-service'
+    );
+
+    const documentServiceRepo = ecr.Repository.fromRepositoryName(
+      this, 'DocumentServiceRepo', 'avalon-document-service'
+    );
+
+    const workflowServiceRepo = ecr.Repository.fromRepositoryName(
+      this, 'WorkflowServiceRepo', 'avalon-workflow-service'
+    );
+
+    const vpc = ec2.Vpc.fromLookup(this, 'AvalonVpc', {
+      vpcId: 'vpc-01ebdf350623e9bf9'
     });
 
-    const apiGatewayRepo = new ecr.Repository(this, 'ApiGatewayRepo', {
-      repositoryName: 'avalon-api-gateway',
-      removalPolicy: cdk.RemovalPolicy.RETAIN,
-    });
-
-    const clientServiceRepo = new ecr.Repository(this, 'ClientServiceRepo', {
-      repositoryName: 'avalon-client-service',
-      removalPolicy: cdk.RemovalPolicy.RETAIN,
-    });
-
-    const loanApplicationServiceRepo = new ecr.Repository(this, 'LoanApplicationServiceRepo', {
-      repositoryName: 'avalon-loan-application-service',
-      removalPolicy: cdk.RemovalPolicy.RETAIN,
-    });
-
-    const documentServiceRepo = new ecr.Repository(this, 'DocumentServiceRepo', {
-      repositoryName: 'avalon-document-service',
-      removalPolicy: cdk.RemovalPolicy.RETAIN,
-    });
-
-    const workflowServiceRepo = new ecr.Repository(this, 'WorkflowServiceRepo', {
-      repositoryName: 'avalon-workflow-service',
-      removalPolicy: cdk.RemovalPolicy.RETAIN,
-    });
-
-    const vpc = new ec2.Vpc(this, 'AvalonVpc', {
-      maxAzs: 2,
-      natGateways: 1,
-    });
-
-    const cluster = new ecs.Cluster(this, 'AvalonCluster', {
+    const cluster = ecs.Cluster.fromClusterAttributes(this, 'AvalonCluster', {
+      clusterName: 'AvalonInfrastructureStack-AvalonClusterEA8F32A6-sguXCCUBpT7p',
       vpc: vpc,
+      securityGroups: []
     });
 
     const serviceRegistryTaskDef = new ecs.FargateTaskDefinition(this, 'ServiceRegistryTaskDef');

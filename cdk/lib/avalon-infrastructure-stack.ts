@@ -235,6 +235,12 @@ export class AvalonInfrastructureStack extends cdk.Stack {
       value: `https://${this.frontendDistribution.distributionDomainName}`,
       description: 'URL for the frontend application',
     });
+    
+    new cdk.CfnOutput(this, 'FrontendDistributionId', {
+      value: this.frontendDistribution.distributionId,
+      description: 'CloudFront Distribution ID for the frontend',
+      exportName: 'AvalonFrontendDistributionId',
+    });
 
     new cdk.CfnOutput(this, 'ApiGatewayUrl', {
       value: `http://${this.loadBalancer.loadBalancerDnsName}`,
