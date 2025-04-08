@@ -47,6 +47,7 @@ phases:
   post_build:
     commands:
       - echo Creating deployment artifacts...
+      - cd ..
       - echo '[{"name":"ApiGatewayContainer","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-api-gateway:latest"}]' > api-gateway-imageDefinitions.json
       - echo '[{"name":"ClientServiceContainer","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-client-service:latest"}]' > client-service-imageDefinitions.json
       - echo '[{"name":"LoanApplicationServiceContainer","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-loan-application-service:latest"}]' > loan-application-service-imageDefinitions.json
