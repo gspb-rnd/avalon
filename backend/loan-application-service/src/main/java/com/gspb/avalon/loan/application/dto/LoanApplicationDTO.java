@@ -35,4 +35,16 @@ public class LoanApplicationDTO {
     private UUID documentPackageId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    
+    public void setTerms(LoanTermsDTO terms) {
+        this.terms = terms;
+    }
+    
+    public void setCollaterals(List<CollateralDTO> collaterals) {
+        this.collaterals = collaterals;
+    }
+    
+    public void setValidationResults(List<ValidationRuleResultDTO> validationResults) {
+        this.validationResults = validationResults;
+    }
 }
