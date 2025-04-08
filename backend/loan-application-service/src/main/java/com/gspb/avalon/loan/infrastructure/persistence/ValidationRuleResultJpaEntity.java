@@ -107,4 +107,13 @@ public class ValidationRuleResultJpaEntity {
     public String getOverriddenBy() {
         return overriddenBy;
     }
+    
+    /**
+     * Checks if the validation rule is effectively passed (either passed or overridden).
+     *
+     * @return True if the rule is effectively passed, false otherwise
+     */
+    public boolean isEffectivelyPassed() {
+        return (passed != null && passed) || (overridden != null && overridden);
+    }
 }
