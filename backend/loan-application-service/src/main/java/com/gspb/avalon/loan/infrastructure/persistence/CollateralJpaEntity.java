@@ -19,8 +19,12 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class CollateralJpaEntity {
+    
+    public static CollateralJpaEntityBuilder builder() {
+        return new CollateralJpaEntityBuilder();
+    }
     
     @Id
     private UUID id;
@@ -63,5 +67,25 @@ public class CollateralJpaEntity {
     
     public boolean isVerified() {
         return verified != null && verified;
+    }
+    
+    public Boolean getVerified() {
+        return verified;
+    }
+    
+    public BigDecimal getAppraiserValue() {
+        return appraiserValue;
+    }
+    
+    public BigDecimal getLoanToValueRatio() {
+        return loanToValueRatio;
+    }
+    
+    public LocalDate getValuationDate() {
+        return valuationDate;
+    }
+    
+    public String getAppraiserName() {
+        return appraiserName;
     }
 }
