@@ -16,7 +16,7 @@ public class CollateralValuationManualReviewRequestedEvent extends DomainEvent {
     private final String reason;
 
     public CollateralValuationManualReviewRequestedEvent(UUID valuationId, UUID collateralId, String reason) {
-        super(UUID.randomUUID(), LocalDateTime.now());
+        super();
         this.valuationId = valuationId;
         this.collateralId = collateralId;
         this.reason = reason;

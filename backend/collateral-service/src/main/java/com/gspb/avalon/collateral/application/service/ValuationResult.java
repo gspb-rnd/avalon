@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class ValuationResult {
     private BigDecimal estimatedValue;
     private BigDecimal haircut;
@@ -61,5 +61,9 @@ public class ValuationResult {
     
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+    
+    public static ValuationResultBuilder builder() {
+        return new ValuationResultBuilder();
     }
 }
