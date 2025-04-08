@@ -14,7 +14,7 @@ import java.time.LocalDate;
  * Data Transfer Object for LoanTerms.
  */
 @Data
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoanTermsDTO {
@@ -32,4 +32,16 @@ public class LoanTermsDTO {
     private BigDecimal earlyRepaymentFee;
     private BigDecimal monthlyPayment;
     private BigDecimal totalCost;
+    
+    public static LoanTermsDTOBuilder builder() {
+        return new LoanTermsDTOBuilder();
+    }
+    
+    public void setMonthlyPayment(BigDecimal monthlyPayment) {
+        this.monthlyPayment = monthlyPayment;
+    }
+    
+    public void setTotalCost(BigDecimal totalCost) {
+        this.totalCost = totalCost;
+    }
 }

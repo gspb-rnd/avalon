@@ -14,7 +14,7 @@ import java.util.UUID;
  * Data Transfer Object for Collateral.
  */
 @Data
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class CollateralDTO {
@@ -30,4 +30,8 @@ public class CollateralDTO {
     private String appraiserName;
     private String documentationUrl;
     private boolean verified;
+    
+    public static CollateralDTOBuilder builder() {
+        return new CollateralDTOBuilder();
+    }
 }
