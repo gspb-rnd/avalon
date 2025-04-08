@@ -47,7 +47,7 @@ phases:
   post_build:
     commands:
       - echo Creating deployment artifacts...
-      - cd backend
+      - cd ..
       - echo '{"ImageURI":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-service-registry:latest"}' > service-registry-imageDefinitions.json
       - echo '{"ImageURI":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-api-gateway:latest"}' > api-gateway-imageDefinitions.json
       - echo '{"ImageURI":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-client-service:latest"}' > client-service-imageDefinitions.json
