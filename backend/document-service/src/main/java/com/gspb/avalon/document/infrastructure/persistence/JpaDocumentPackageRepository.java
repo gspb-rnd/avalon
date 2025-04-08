@@ -40,7 +40,6 @@ public class JpaDocumentPackageRepository implements DocumentPackageRepository {
                 .collect(Collectors.toList());
     }
     
-    @Override
     public void deleteById(UUID id) {
         springDataRepository.deleteById(id);
     }
