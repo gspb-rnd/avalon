@@ -10,6 +10,7 @@ import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as logs from 'aws-cdk-lib/aws-logs';
+import * as servicediscovery from 'aws-cdk-lib/aws-servicediscovery';
 
 export class AvalonInfrastructureStack extends cdk.Stack {
   public readonly vpc: ec2.Vpc;
@@ -405,22 +406,22 @@ export class AvalonInfrastructureStack extends cdk.Stack {
       }),
     };
 
-    const namespace = new ecs.CloudMapNamespace(this, 'ServiceDiscoveryNamespace', {
+    const namespace = new servicediscovery.PrivateDnsNamespace(this, 'ServiceDiscoveryNamespace', {
       vpc: this.vpc,
       name: 'avalon.local',
     });
 
-    const serviceRegistry = new ecs.CloudMapService(this, 'ServiceRegistryDiscovery', {
+    const serviceRegistry = new servicediscovery.Service(this, 'ServiceRegistryDiscovery', {
       namespace,
       name: 'service-registry',
-      dnsRecordType: ecs.DnsRecordType.A,
+      dnsRecordType: servicediscovery.DnsRecordType.A,
       dnsTtl: cdk.Duration.seconds(30),
     });
 
-    const apiGatewayDiscovery = new ecs.CloudMapService(this, 'ApiGatewayDiscovery', {
+    const apiGatewayDiscovery = new servicediscovery.Service(this, 'ApiGatewayDiscovery', {
       namespace,
       name: 'api-gateway',
-      dnsRecordType: ecs.DnsRecordType.A,
+      dnsRecordType: servicediscovery.DnsRecordType.A,
       dnsTtl: cdk.Duration.seconds(30),
     });
 
