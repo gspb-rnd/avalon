@@ -27,6 +27,10 @@ public class ValidationRuleResult extends ValueObject {
         return overriddenBy;
     }
     
+    public boolean isOverridden() {
+        return overridden;
+    }
+    
     /**
      * Creates a new validation rule result.
      *

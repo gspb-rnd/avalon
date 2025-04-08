@@ -26,7 +26,7 @@ public class LoanApplicationCreatedEvent extends DomainEvent {
      * @param advisorId The advisor ID
      */
     public LoanApplicationCreatedEvent(UUID loanApplicationId, UUID clientId, LoanType loanType, String advisorId) {
-        super(UUID.randomUUID(), LocalDateTime.now());
+        super();
         this.loanApplicationId = loanApplicationId;
         this.clientId = clientId;
         this.loanType = loanType;

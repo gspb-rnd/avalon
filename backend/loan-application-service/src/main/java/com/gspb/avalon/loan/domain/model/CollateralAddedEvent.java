@@ -27,7 +27,7 @@ public class CollateralAddedEvent extends DomainEvent {
      * @param estimatedValue The estimated value
      */
     public CollateralAddedEvent(UUID loanApplicationId, UUID collateralId, CollateralType collateralType, BigDecimal estimatedValue) {
-        super(UUID.randomUUID(), LocalDateTime.now());
+        super();
         this.loanApplicationId = loanApplicationId;
         this.collateralId = collateralId;
         this.collateralType = collateralType;
