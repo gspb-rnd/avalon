@@ -19,7 +19,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class UpdateCollateralValuationCommand {
     
     @NotNull(message = "Valuation ID is required")
@@ -42,4 +42,56 @@ public class UpdateCollateralValuationCommand {
     
     @NotNull(message = "Expiration date is required")
     private LocalDateTime expirationDate;
+    
+    public UUID getValuationId() {
+        return valuationId;
+    }
+    
+    public void setValuationId(UUID valuationId) {
+        this.valuationId = valuationId;
+    }
+    
+    public BigDecimal getEstimatedValue() {
+        return estimatedValue;
+    }
+    
+    public void setEstimatedValue(BigDecimal estimatedValue) {
+        this.estimatedValue = estimatedValue;
+    }
+    
+    public BigDecimal getHaircut() {
+        return haircut;
+    }
+    
+    public void setHaircut(BigDecimal haircut) {
+        this.haircut = haircut;
+    }
+    
+    public RiskLevel getRiskLevel() {
+        return riskLevel;
+    }
+    
+    public void setRiskLevel(RiskLevel riskLevel) {
+        this.riskLevel = riskLevel;
+    }
+    
+    public String getValuatedBy() {
+        return valuatedBy;
+    }
+    
+    public void setValuatedBy(String valuatedBy) {
+        this.valuatedBy = valuatedBy;
+    }
+    
+    public LocalDateTime getExpirationDate() {
+        return expirationDate;
+    }
+    
+    public void setExpirationDate(LocalDateTime expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+    
+    public static UpdateCollateralValuationCommandBuilder builder() {
+        return new UpdateCollateralValuationCommandBuilder();
+    }
 }

@@ -15,7 +15,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class AddExternalReferenceCommand {
     
     @NotNull(message = "Valuation ID is required")
@@ -28,4 +28,40 @@ public class AddExternalReferenceCommand {
     private String referenceId;
     
     private String referenceUrl;
+    
+    public UUID getValuationId() {
+        return valuationId;
+    }
+    
+    public void setValuationId(UUID valuationId) {
+        this.valuationId = valuationId;
+    }
+    
+    public String getSourceSystem() {
+        return sourceSystem;
+    }
+    
+    public void setSourceSystem(String sourceSystem) {
+        this.sourceSystem = sourceSystem;
+    }
+    
+    public String getReferenceId() {
+        return referenceId;
+    }
+    
+    public void setReferenceId(String referenceId) {
+        this.referenceId = referenceId;
+    }
+    
+    public String getReferenceUrl() {
+        return referenceUrl;
+    }
+    
+    public void setReferenceUrl(String referenceUrl) {
+        this.referenceUrl = referenceUrl;
+    }
+    
+    public static AddExternalReferenceCommandBuilder builder() {
+        return new AddExternalReferenceCommandBuilder();
+    }
 }

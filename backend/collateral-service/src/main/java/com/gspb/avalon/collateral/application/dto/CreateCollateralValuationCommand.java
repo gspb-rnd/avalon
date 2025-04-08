@@ -17,7 +17,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class CreateCollateralValuationCommand {
     
     @NotNull(message = "Collateral ID is required")
@@ -34,4 +34,48 @@ public class CreateCollateralValuationCommand {
     
     @NotNull(message = "Valuation method is required")
     private ValuationMethod valuationMethod;
+    
+    public UUID getCollateralId() {
+        return collateralId;
+    }
+    
+    public void setCollateralId(UUID collateralId) {
+        this.collateralId = collateralId;
+    }
+    
+    public UUID getLoanApplicationId() {
+        return loanApplicationId;
+    }
+    
+    public void setLoanApplicationId(UUID loanApplicationId) {
+        this.loanApplicationId = loanApplicationId;
+    }
+    
+    public AssetClass getAssetClass() {
+        return assetClass;
+    }
+    
+    public void setAssetClass(AssetClass assetClass) {
+        this.assetClass = assetClass;
+    }
+    
+    public String getAssetDescription() {
+        return assetDescription;
+    }
+    
+    public void setAssetDescription(String assetDescription) {
+        this.assetDescription = assetDescription;
+    }
+    
+    public ValuationMethod getValuationMethod() {
+        return valuationMethod;
+    }
+    
+    public void setValuationMethod(ValuationMethod valuationMethod) {
+        this.valuationMethod = valuationMethod;
+    }
+    
+    public static CreateCollateralValuationCommandBuilder builder() {
+        return new CreateCollateralValuationCommandBuilder();
+    }
 }

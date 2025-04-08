@@ -14,7 +14,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class ExternalValuationReferenceDTO {
     private UUID id;
     private UUID valuationId;
@@ -22,4 +22,56 @@ public class ExternalValuationReferenceDTO {
     private String referenceId;
     private String referenceUrl;
     private LocalDateTime createdAt;
+    
+    public UUID getId() {
+        return id;
+    }
+    
+    public void setId(UUID id) {
+        this.id = id;
+    }
+    
+    public UUID getValuationId() {
+        return valuationId;
+    }
+    
+    public void setValuationId(UUID valuationId) {
+        this.valuationId = valuationId;
+    }
+    
+    public String getSourceSystem() {
+        return sourceSystem;
+    }
+    
+    public void setSourceSystem(String sourceSystem) {
+        this.sourceSystem = sourceSystem;
+    }
+    
+    public String getReferenceId() {
+        return referenceId;
+    }
+    
+    public void setReferenceId(String referenceId) {
+        this.referenceId = referenceId;
+    }
+    
+    public String getReferenceUrl() {
+        return referenceUrl;
+    }
+    
+    public void setReferenceUrl(String referenceUrl) {
+        this.referenceUrl = referenceUrl;
+    }
+    
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+    
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+    
+    public static ExternalValuationReferenceDTOBuilder builder() {
+        return new ExternalValuationReferenceDTOBuilder();
+    }
 }

@@ -16,7 +16,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class AddRiskFactorCommand {
     
     @NotNull(message = "Valuation ID is required")
@@ -30,4 +30,40 @@ public class AddRiskFactorCommand {
     
     @NotNull(message = "Impact level is required")
     private RiskLevel impact;
+    
+    public UUID getValuationId() {
+        return valuationId;
+    }
+    
+    public void setValuationId(UUID valuationId) {
+        this.valuationId = valuationId;
+    }
+    
+    public String getFactorName() {
+        return factorName;
+    }
+    
+    public void setFactorName(String factorName) {
+        this.factorName = factorName;
+    }
+    
+    public String getDescription() {
+        return description;
+    }
+    
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+    public RiskLevel getImpact() {
+        return impact;
+    }
+    
+    public void setImpact(RiskLevel impact) {
+        this.impact = impact;
+    }
+    
+    public static AddRiskFactorCommandBuilder builder() {
+        return new AddRiskFactorCommandBuilder();
+    }
 }
