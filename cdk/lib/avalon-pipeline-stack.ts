@@ -172,10 +172,10 @@ export class AvalonPipelineStack extends cdk.Stack {
             commands: [
               'echo Installing dependencies...',
               'cd frontend/shared-components',
-              'npm install',
+              'npm install --legacy-peer-deps',
               'npm run build',
               'cd ../advisor-portal',
-              'npm install',
+              'npm install --legacy-peer-deps',
             ],
           },
           build: {
@@ -254,121 +254,68 @@ export class AvalonPipelineStack extends cdk.Stack {
       stageName: 'Deploy',
     });
 
-    const serviceRegistryRepo = new ecr.Repository(this, 'ServiceRegistryRepo', {
-      repositoryName: 'avalon-service-registry',
-      removalPolicy: cdk.RemovalPolicy.RETAIN,
+    const serviceRegistryRepo = ecr.Repository.fromRepositoryName(
+      this, 'ServiceRegistryRepo', 'avalon-service-registry'
+    );
+
+    const apiGatewayRepo = ecr.Repository.fromRepositoryName(
+      this, 'ApiGatewayRepo', 'avalon-api-gateway'
+    );
+
+    const clientServiceRepo = ecr.Repository.fromRepositoryName(
+      this, 'ClientServiceRepo', 'avalon-client-service'
+    );
+
+    const loanApplicationServiceRepo = ecr.Repository.fromRepositoryName(
+      this, 'LoanApplicationServiceRepo', 'avalon-loan-application-service'
+    );
+
+    const documentServiceRepo = ecr.Repository.fromRepositoryName(
+      this, 'DocumentServiceRepo', 'avalon-document-service'
+    );
+
+    const workflowServiceRepo = ecr.Repository.fromRepositoryName(
+      this, 'WorkflowServiceRepo', 'avalon-workflow-service'
+    );
+
+    const vpc = ec2.Vpc.fromLookup(this, 'AvalonVpc', {
+      vpcId: 'vpc-01ebdf350623e9bf9'
     });
 
-    const apiGatewayRepo = new ecr.Repository(this, 'ApiGatewayRepo', {
-      repositoryName: 'avalon-api-gateway',
-      removalPolicy: cdk.RemovalPolicy.RETAIN,
-    });
-
-    const clientServiceRepo = new ecr.Repository(this, 'ClientServiceRepo', {
-      repositoryName: 'avalon-client-service',
-      removalPolicy: cdk.RemovalPolicy.RETAIN,
-    });
-
-    const loanApplicationServiceRepo = new ecr.Repository(this, 'LoanApplicationServiceRepo', {
-      repositoryName: 'avalon-loan-application-service',
-      removalPolicy: cdk.RemovalPolicy.RETAIN,
-    });
-
-    const documentServiceRepo = new ecr.Repository(this, 'DocumentServiceRepo', {
-      repositoryName: 'avalon-document-service',
-      removalPolicy: cdk.RemovalPolicy.RETAIN,
-    });
-
-    const workflowServiceRepo = new ecr.Repository(this, 'WorkflowServiceRepo', {
-      repositoryName: 'avalon-workflow-service',
-      removalPolicy: cdk.RemovalPolicy.RETAIN,
-    });
-
-    const vpc = new ec2.Vpc(this, 'AvalonVpc', {
-      maxAzs: 2,
-      natGateways: 1,
-    });
-
-    const cluster = new ecs.Cluster(this, 'AvalonCluster', {
+    const cluster = ecs.Cluster.fromClusterAttributes(this, 'AvalonCluster', {
+      clusterName: 'AvalonInfrastructureStack-AvalonClusterEA8F32A6-sguXCCUBpT7p',
       vpc: vpc,
+      securityGroups: []
     });
 
-    const serviceRegistryTaskDef = new ecs.FargateTaskDefinition(this, 'ServiceRegistryTaskDef');
-    serviceRegistryTaskDef.addContainer('ServiceRegistryContainer', {
-      image: ecs.ContainerImage.fromEcrRepository(serviceRegistryRepo),
-      portMappings: [{ containerPort: 8761 }],
-    });
-
-    const serviceRegistryService = new ecs.FargateService(this, 'ServiceRegistryService', {
-      cluster: cluster,
-      taskDefinition: serviceRegistryTaskDef,
+    const serviceRegistryService = ecs.FargateService.fromFargateServiceAttributes(this, 'ServiceRegistryService', {
+      cluster,
       serviceName: 'avalon-service-registry',
-      desiredCount: 1,
     });
 
-    const apiGatewayTaskDef = new ecs.FargateTaskDefinition(this, 'ApiGatewayTaskDef');
-    apiGatewayTaskDef.addContainer('ApiGatewayContainer', {
-      image: ecs.ContainerImage.fromEcrRepository(apiGatewayRepo),
-      portMappings: [{ containerPort: 8080 }],
-    });
-
-    const apiGatewayService = new ecs.FargateService(this, 'ApiGatewayService', {
-      cluster: cluster,
-      taskDefinition: apiGatewayTaskDef,
+    const apiGatewayService = ecs.FargateService.fromFargateServiceAttributes(this, 'ApiGatewayService', {
+      cluster,
       serviceName: 'avalon-api-gateway',
-      desiredCount: 1,
     });
 
-    const clientServiceTaskDef = new ecs.FargateTaskDefinition(this, 'ClientServiceTaskDef');
-    clientServiceTaskDef.addContainer('ClientServiceContainer', {
-      image: ecs.ContainerImage.fromEcrRepository(clientServiceRepo),
-      portMappings: [{ containerPort: 8081 }],
-    });
-
-    const clientService = new ecs.FargateService(this, 'ClientService', {
-      cluster: cluster,
-      taskDefinition: clientServiceTaskDef,
+    const clientService = ecs.FargateService.fromFargateServiceAttributes(this, 'ClientService', {
+      cluster,
       serviceName: 'avalon-client-service',
-      desiredCount: 1,
     });
 
-    const loanApplicationServiceTaskDef = new ecs.FargateTaskDefinition(this, 'LoanApplicationServiceTaskDef');
-    loanApplicationServiceTaskDef.addContainer('LoanApplicationServiceContainer', {
-      image: ecs.ContainerImage.fromEcrRepository(loanApplicationServiceRepo),
-      portMappings: [{ containerPort: 8082 }],
-    });
-
-    const loanApplicationService = new ecs.FargateService(this, 'LoanApplicationService', {
-      cluster: cluster,
-      taskDefinition: loanApplicationServiceTaskDef,
+    const loanApplicationService = ecs.FargateService.fromFargateServiceAttributes(this, 'LoanApplicationService', {
+      cluster,
       serviceName: 'avalon-loan-application-service',
-      desiredCount: 1,
     });
 
-    const documentServiceTaskDef = new ecs.FargateTaskDefinition(this, 'DocumentServiceTaskDef');
-    documentServiceTaskDef.addContainer('DocumentServiceContainer', {
-      image: ecs.ContainerImage.fromEcrRepository(documentServiceRepo),
-      portMappings: [{ containerPort: 8083 }],
-    });
-
-    const documentService = new ecs.FargateService(this, 'DocumentService', {
-      cluster: cluster,
-      taskDefinition: documentServiceTaskDef,
+    const documentService = ecs.FargateService.fromFargateServiceAttributes(this, 'DocumentService', {
+      cluster,
       serviceName: 'avalon-document-service',
-      desiredCount: 1,
     });
 
-    const workflowServiceTaskDef = new ecs.FargateTaskDefinition(this, 'WorkflowServiceTaskDef');
-    workflowServiceTaskDef.addContainer('WorkflowServiceContainer', {
-      image: ecs.ContainerImage.fromEcrRepository(workflowServiceRepo),
-      portMappings: [{ containerPort: 8084 }],
-    });
-
-    const workflowService = new ecs.FargateService(this, 'WorkflowService', {
-      cluster: cluster,
-      taskDefinition: workflowServiceTaskDef,
+    const workflowService = ecs.FargateService.fromFargateServiceAttributes(this, 'WorkflowService', {
+      cluster,
       serviceName: 'avalon-workflow-service',
-      desiredCount: 1,
     });
 
     deployStage.addAction(

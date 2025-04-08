@@ -26,7 +26,6 @@
         <module>collateral-service</module>
         <module>document-service</module>
         <module>workflow-service</module>
-        <module>audit-service</module>
         <module>api-gateway</module>
     </modules>
     
