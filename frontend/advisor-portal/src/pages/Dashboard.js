@@ -22,7 +22,7 @@ function Dashboard() {
         {status === 'loading' && <p>Loading loan applications...</p>}
         {error && <p className="error">Error: {error}</p>}
         
-        {loanApplications.length > 0 && (
+        {Array.isArray(loanApplications) && loanApplications.length > 0 && (
           <div className="loan-applications-list">
             <h2>Your Loan Applications</h2>
             <table>
