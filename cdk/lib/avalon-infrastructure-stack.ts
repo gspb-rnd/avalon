@@ -198,6 +198,18 @@ export class AvalonInfrastructureStack extends cdk.Stack {
       },
     });
 
+    const namespace = new servicediscovery.PrivateDnsNamespace(this, 'ServiceDiscoveryNamespace', {
+      vpc: this.vpc,
+      name: 'avalon.local',
+    });
+
+    const serviceRegistryDiscovery = new servicediscovery.Service(this, 'ServiceRegistryDiscovery', {
+      namespace,
+      name: 'service-registry',
+      dnsRecordType: servicediscovery.DnsRecordType.A,
+      dnsTtl: cdk.Duration.seconds(30),
+    });
+
     const serviceRegistryService = new ecs.FargateService(this, 'ServiceRegistryService', {
       cluster: this.cluster,
       taskDefinition: serviceRegistryTaskDefinition,
@@ -207,6 +219,10 @@ export class AvalonInfrastructureStack extends cdk.Stack {
       vpcSubnets: {
         subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
       },
+    });
+    
+    serviceRegistryService.associateCloudMapService({
+      service: serviceRegistryDiscovery,
     });
 
     const logGroups = {
@@ -274,7 +290,7 @@ export class AvalonInfrastructureStack extends cdk.Stack {
       }),
       environment: {
         'SPRING_PROFILES_ACTIVE': 'prod',
-        'EUREKA_CLIENT_SERVICEURL_DEFAULTZONE': 'http://service-registry:8761/eureka/',
+        'EUREKA_CLIENT_SERVICEURL_DEFAULTZONE': 'http://service-registry.avalon.local:8761/eureka/',
       },
     });
 
@@ -287,7 +303,7 @@ export class AvalonInfrastructureStack extends cdk.Stack {
       }),
       environment: {
         'SPRING_PROFILES_ACTIVE': 'prod',
-        'EUREKA_CLIENT_SERVICEURL_DEFAULTZONE': 'http://service-registry:8761/eureka/',
+        'EUREKA_CLIENT_SERVICEURL_DEFAULTZONE': 'http://service-registry.avalon.local:8761/eureka/',
       },
     });
 
@@ -300,7 +316,7 @@ export class AvalonInfrastructureStack extends cdk.Stack {
       }),
       environment: {
         'SPRING_PROFILES_ACTIVE': 'prod',
-        'EUREKA_CLIENT_SERVICEURL_DEFAULTZONE': 'http://service-registry:8761/eureka/',
+        'EUREKA_CLIENT_SERVICEURL_DEFAULTZONE': 'http://service-registry.avalon.local:8761/eureka/',
       },
     });
 
@@ -313,7 +329,7 @@ export class AvalonInfrastructureStack extends cdk.Stack {
       }),
       environment: {
         'SPRING_PROFILES_ACTIVE': 'prod',
-        'EUREKA_CLIENT_SERVICEURL_DEFAULTZONE': 'http://service-registry:8761/eureka/',
+        'EUREKA_CLIENT_SERVICEURL_DEFAULTZONE': 'http://service-registry.avalon.local:8761/eureka/',
       },
     });
 
@@ -326,7 +342,7 @@ export class AvalonInfrastructureStack extends cdk.Stack {
       }),
       environment: {
         'SPRING_PROFILES_ACTIVE': 'prod',
-        'EUREKA_CLIENT_SERVICEURL_DEFAULTZONE': 'http://service-registry:8761/eureka/',
+        'EUREKA_CLIENT_SERVICEURL_DEFAULTZONE': 'http://service-registry.avalon.local:8761/eureka/',
       },
     });
 
@@ -416,17 +432,6 @@ export class AvalonInfrastructureStack extends cdk.Stack {
       }),
     };
 
-    const namespace = new servicediscovery.PrivateDnsNamespace(this, 'ServiceDiscoveryNamespace', {
-      vpc: this.vpc,
-      name: 'avalon.local',
-    });
-
-    const serviceRegistry = new servicediscovery.Service(this, 'ServiceRegistryDiscovery', {
-      namespace,
-      name: 'service-registry',
-      dnsRecordType: servicediscovery.DnsRecordType.A,
-      dnsTtl: cdk.Duration.seconds(30),
-    });
 
     const apiGatewayDiscovery = new servicediscovery.Service(this, 'ApiGatewayDiscovery', {
       namespace,
