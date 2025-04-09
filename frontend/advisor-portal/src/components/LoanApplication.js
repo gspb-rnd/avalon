@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { createLoanApplication } from '../features/loans/loansSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { createLoanApplication, resetStatus } from '../features/loans/loansSlice';
 import './LoanApplication.css';
 
-const LoanApplication = () => {
+const LoanApplication = (props) => {
   const dispatch = useDispatch();
+  const { status } = useSelector(state => state.loans);
   const [formData, setFormData] = useState({
     clientId: '',
     loanAmount: '',
@@ -25,6 +26,9 @@ const LoanApplication = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    dispatch(resetStatus());
+    
     dispatch(createLoanApplication({
       clientId: formData.clientId,
       loanTerms: {
@@ -37,7 +41,12 @@ const LoanApplication = () => {
         type: formData.collateralType,
         estimatedValue: parseFloat(formData.collateralValue)
       }
-    }));
+    })).then(() => {
+      if (props.onSubmitSuccess) {
+        props.onSubmitSuccess();
+      }
+    });
+    
     setFormData({
       clientId: '',
       loanAmount: '',

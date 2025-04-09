@@ -37,7 +37,7 @@ export const createLoanApplication = createAsyncThunk(
       mockLoanApplications.push(newApplication);
       return newApplication;
     } catch (error) {
-      return rejectWithValue({ message: error.message || 'An error occurred while processing your request' });
+      return rejectWithValue(error.message || 'An error occurred while processing your request');
     }
   }
 );
@@ -45,7 +45,11 @@ export const createLoanApplication = createAsyncThunk(
 export const fetchLoanApplications = createAsyncThunk(
   'loans/fetchLoanApplications',
   async (_, { rejectWithValue }) => {
-    return mockLoanApplications;
+    try {
+      return mockLoanApplications;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to fetch loan applications');
+    }
   }
 );
 
@@ -59,7 +63,7 @@ export const fetchLoanApplicationById = createAsyncThunk(
       }
       return loan;
     } catch (error) {
-      return rejectWithValue({ message: error.message || 'An error occurred while processing your request' });
+      return rejectWithValue(error.message || 'An error occurred while processing your request');
     }
   }
 );
@@ -104,7 +108,7 @@ const loansSlice = createSlice({
       })
       .addCase(fetchLoanApplications.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload?.message || 'Failed to fetch loan applications';
+        state.error = action.payload || 'Failed to fetch loan applications';
       })
       
       .addCase(fetchLoanApplicationById.pending, (state) => {
