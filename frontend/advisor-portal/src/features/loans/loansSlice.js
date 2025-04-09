@@ -26,16 +26,8 @@ export const createLoanApplication = createAsyncThunk(
   'loans/createLoanApplication',
   async (loanData, { rejectWithValue }) => {
     try {
-      const newApplication = {
-        id: `loan-${Date.now()}`,
-        clientId: loanData.clientId,
-        status: 'PENDING_REVIEW',
-        createdDate: new Date().toISOString(),
-        loanTerms: loanData.loanTerms,
-        collateral: loanData.collateral
-      };
-      mockLoanApplications.push(newApplication);
-      return newApplication;
+      const response = await axios.post(`${API_URL}/loan-applications`, loanData);
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.message || 'An error occurred while processing your request');
     }
@@ -46,7 +38,8 @@ export const fetchLoanApplications = createAsyncThunk(
   'loans/fetchLoanApplications',
   async (_, { rejectWithValue }) => {
     try {
-      return mockLoanApplications;
+      const response = await axios.get(`${API_URL}/loan-applications`);
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.message || 'Failed to fetch loan applications');
     }
@@ -57,11 +50,8 @@ export const fetchLoanApplicationById = createAsyncThunk(
   'loans/fetchLoanApplicationById',
   async (id, { rejectWithValue }) => {
     try {
-      const loan = mockLoanApplications.find(loan => loan.id === id);
-      if (!loan) {
-        throw new Error('Loan application not found');
-      }
-      return loan;
+      const response = await axios.get(`${API_URL}/loan-applications/${id}`);
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.message || 'An error occurred while processing your request');
     }
