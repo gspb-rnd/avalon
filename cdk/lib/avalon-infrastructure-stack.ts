@@ -344,13 +344,29 @@ export class AvalonInfrastructureStack extends cdk.Stack {
       },
     });
 
-    const httpListener = this.loadBalancer.addListener('HttpListener', {
-      port: 80,
+    const certificate = elbv2.ListenerCertificate.fromArn(
+      'arn:aws:acm:us-east-1:830548085583:certificate/1f2b056a-97ae-4034-80ce-c5e21bdf6aa2'
+    );
+
+    const httpsListener = this.loadBalancer.addListener('HttpsListener', {
+      port: 443,
+      certificates: [certificate],
+      protocol: elbv2.ApplicationProtocol.HTTPS,
       open: true,
     });
 
-    httpListener.addTargetGroups('ApiGatewayTargetGroup', {
+    httpsListener.addTargetGroups('ApiGatewayTargetGroup', {
       targetGroups: [apiGatewayTargetGroup],
+    });
+
+    const apiOrigin = new origins.LoadBalancerV2Origin(this.loadBalancer, {
+      protocolPolicy: cloudfront.OriginProtocolPolicy.HTTP_ONLY,
+    });
+
+    this.frontendDistribution.addBehavior('/api/*', apiOrigin, {
+      allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
+      cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
+      originRequestPolicy: cloudfront.OriginRequestPolicy.ALL_VIEWER,
     });
 
     const services = {
@@ -443,7 +459,7 @@ export class AvalonInfrastructureStack extends cdk.Stack {
     });
 
     new cdk.CfnOutput(this, 'ApiGatewayUrl', {
-      value: `http://${this.loadBalancer.loadBalancerDnsName}`,
+      value: `https://${this.loadBalancer.loadBalancerDnsName}`,
       description: 'URL for the API Gateway',
     });
 

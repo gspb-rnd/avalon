@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_URL = 'https://d2kbjdljdoxcy0.cloudfront.net';
+const API_URL = 'https://d2kbjdljdoxcy0.cloudfront.net/api';
 
 const mockLoanApplications = [
   {
@@ -45,11 +45,7 @@ export const createLoanApplication = createAsyncThunk(
 export const fetchLoanApplications = createAsyncThunk(
   'loans/fetchLoanApplications',
   async (_, { rejectWithValue }) => {
-    try {
-      return mockLoanApplications;
-    } catch (error) {
-      return rejectWithValue({ message: error.message || 'An error occurred while processing your request' });
-    }
+    return mockLoanApplications;
   }
 );
 
@@ -108,7 +104,7 @@ const loansSlice = createSlice({
       })
       .addCase(fetchLoanApplications.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload || 'Failed to fetch loan applications';
+        state.error = action.payload?.message || 'Failed to fetch loan applications';
       })
       
       .addCase(fetchLoanApplicationById.pending, (state) => {
