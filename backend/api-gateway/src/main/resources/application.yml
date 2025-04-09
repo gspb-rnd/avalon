@@ -23,6 +23,54 @@ spring:
             - Path=/api/clients/**
           filters:
             - StripPrefix=1
+        - id: collateral-service
+          uri: lb://collateral-service
+          predicates:
+            - Path=/api/collateral/**
+          filters:
+            - StripPrefix=1
+        - id: document-service
+          uri: lb://document-service
+          predicates:
+            - Path=/api/documents/**
+          filters:
+            - StripPrefix=1
+        - id: workflow-service
+          uri: lb://workflow-service
+          predicates:
+            - Path=/api/workflows/**
+          filters:
+            - StripPrefix=1
+        - id: swagger-ui
+          uri: lb://loan-application-service
+          predicates:
+            - Path=/api/loan-applications/swagger-ui.html
+          filters:
+            - StripPrefix=1
+        - id: swagger-ui-client
+          uri: lb://client-service
+          predicates:
+            - Path=/api/clients/swagger-ui.html
+          filters:
+            - StripPrefix=1
+        - id: swagger-ui-collateral
+          uri: lb://collateral-service
+          predicates:
+            - Path=/api/collateral/swagger-ui.html
+          filters:
+            - StripPrefix=1
+        - id: swagger-ui-document
+          uri: lb://document-service
+          predicates:
+            - Path=/api/documents/swagger-ui.html
+          filters:
+            - StripPrefix=1
+        - id: swagger-ui-workflow
+          uri: lb://workflow-service
+          predicates:
+            - Path=/api/workflows/swagger-ui.html
+          filters:
+            - StripPrefix=1
   security:
     oauth2:
       resourceserver:
