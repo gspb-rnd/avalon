@@ -344,18 +344,12 @@ export class AvalonInfrastructureStack extends cdk.Stack {
       },
     });
 
-    const certificate = elbv2.ListenerCertificate.fromArn(
-      'arn:aws:acm:us-east-1:830548085583:certificate/1f2b056a-97ae-4034-80ce-c5e21bdf6aa2'
-    );
-
-    const httpsListener = this.loadBalancer.addListener('HttpsListener', {
-      port: 443,
-      certificates: [certificate],
-      protocol: elbv2.ApplicationProtocol.HTTPS,
+    const httpListener = this.loadBalancer.addListener('HttpListener', {
+      port: 80,
       open: true,
     });
 
-    httpsListener.addTargetGroups('ApiGatewayTargetGroup', {
+    httpListener.addTargetGroups('ApiGatewayTargetGroup', {
       targetGroups: [apiGatewayTargetGroup],
     });
 
