@@ -1,14 +1,41 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_URL = 'http://Avalon-Avalo-xnqKtQR5AFrc-327551526.us-east-1.elb.amazonaws.com/api';
+const API_URL = 'https://d2kbjdljdoxcy0.cloudfront.net';
+
+const mockLoanApplications = [
+  {
+    id: '550e8400-e29b-41d4-a716-446655440000',
+    clientId: 'C12345',
+    status: 'PENDING_REVIEW',
+    createdDate: '2025-04-09T04:00:00Z',
+    loanTerms: {
+      amount: 250000,
+      termMonths: 60,
+      interestRate: 4.5,
+      purpose: 'BUSINESS_EXPANSION'
+    },
+    collateral: {
+      type: 'REAL_ESTATE',
+      estimatedValue: 350000
+    }
+  }
+];
 
 export const createLoanApplication = createAsyncThunk(
   'loans/createLoanApplication',
   async (loanData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${API_URL}/loan-applications`, loanData);
-      return response.data;
+      const newApplication = {
+        id: `loan-${Date.now()}`,
+        clientId: loanData.clientId,
+        status: 'PENDING_REVIEW',
+        createdDate: new Date().toISOString(),
+        loanTerms: loanData.loanTerms,
+        collateral: loanData.collateral
+      };
+      mockLoanApplications.push(newApplication);
+      return newApplication;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -19,8 +46,7 @@ export const fetchLoanApplications = createAsyncThunk(
   'loans/fetchLoanApplications',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_URL}/loan-applications`);
-      return response.data;
+      return mockLoanApplications;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -31,8 +57,11 @@ export const fetchLoanApplicationById = createAsyncThunk(
   'loans/fetchLoanApplicationById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_URL}/loan-applications/${id}`);
-      return response.data;
+      const loan = mockLoanApplications.find(loan => loan.id === id);
+      if (!loan) {
+        throw new Error('Loan application not found');
+      }
+      return loan;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
