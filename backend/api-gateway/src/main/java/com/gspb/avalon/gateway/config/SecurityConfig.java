@@ -30,11 +30,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .cors().configurationSource(corsConfigurationSource()).and()
                 .authorizeExchange()
-                .pathMatchers("/actuator/**").permitAll()
-                .pathMatchers("/api/**").authenticated()
-                .anyExchange().authenticated()
-                .and()
-                .oauth2ResourceServer().jwt().and()
+                .pathMatchers("/**").permitAll()
                 .and()
                 .build();
     }
