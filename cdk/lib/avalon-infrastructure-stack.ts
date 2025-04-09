@@ -304,6 +304,9 @@ export class AvalonInfrastructureStack extends cdk.Stack {
       environment: {
         'SPRING_PROFILES_ACTIVE': 'prod',
         'EUREKA_CLIENT_SERVICEURL_DEFAULTZONE': 'http://service-registry.avalon.local:8761/eureka/',
+        'SPRING_DATASOURCE_URL': `jdbc:postgresql://${this.database.dbInstanceEndpointAddress}:${this.database.dbInstanceEndpointPort}/avalon`,
+        'SPRING_DATASOURCE_USERNAME': 'avalonadmin',
+        'SPRING_DATASOURCE_PASSWORD': this.database.secret?.secretValueFromJson('password').unsafeUnwrap() || 'password',
       },
     });
 
@@ -317,6 +320,9 @@ export class AvalonInfrastructureStack extends cdk.Stack {
       environment: {
         'SPRING_PROFILES_ACTIVE': 'prod',
         'EUREKA_CLIENT_SERVICEURL_DEFAULTZONE': 'http://service-registry.avalon.local:8761/eureka/',
+        'SPRING_DATASOURCE_URL': `jdbc:postgresql://${this.database.dbInstanceEndpointAddress}:${this.database.dbInstanceEndpointPort}/avalon`,
+        'SPRING_DATASOURCE_USERNAME': 'avalonadmin',
+        'SPRING_DATASOURCE_PASSWORD': this.database.secret?.secretValueFromJson('password').unsafeUnwrap() || 'password',
       },
     });
 
@@ -330,6 +336,9 @@ export class AvalonInfrastructureStack extends cdk.Stack {
       environment: {
         'SPRING_PROFILES_ACTIVE': 'prod',
         'EUREKA_CLIENT_SERVICEURL_DEFAULTZONE': 'http://service-registry.avalon.local:8761/eureka/',
+        'SPRING_DATASOURCE_URL': `jdbc:postgresql://${this.database.dbInstanceEndpointAddress}:${this.database.dbInstanceEndpointPort}/avalon`,
+        'SPRING_DATASOURCE_USERNAME': 'avalonadmin',
+        'SPRING_DATASOURCE_PASSWORD': this.database.secret?.secretValueFromJson('password').unsafeUnwrap() || 'password',
       },
     });
 
@@ -343,6 +352,9 @@ export class AvalonInfrastructureStack extends cdk.Stack {
       environment: {
         'SPRING_PROFILES_ACTIVE': 'prod',
         'EUREKA_CLIENT_SERVICEURL_DEFAULTZONE': 'http://service-registry.avalon.local:8761/eureka/',
+        'SPRING_DATASOURCE_URL': `jdbc:postgresql://${this.database.dbInstanceEndpointAddress}:${this.database.dbInstanceEndpointPort}/avalon`,
+        'SPRING_DATASOURCE_USERNAME': 'avalonadmin',
+        'SPRING_DATASOURCE_PASSWORD': this.database.secret?.secretValueFromJson('password').unsafeUnwrap() || 'password',
       },
     });
 
