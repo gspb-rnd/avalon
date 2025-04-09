@@ -37,7 +37,7 @@ export const createLoanApplication = createAsyncThunk(
       mockLoanApplications.push(newApplication);
       return newApplication;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue({ message: error.message || 'An error occurred while processing your request' });
     }
   }
 );
@@ -48,7 +48,7 @@ export const fetchLoanApplications = createAsyncThunk(
     try {
       return mockLoanApplications;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue({ message: error.message || 'An error occurred while processing your request' });
     }
   }
 );
@@ -63,7 +63,7 @@ export const fetchLoanApplicationById = createAsyncThunk(
       }
       return loan;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue({ message: error.message || 'An error occurred while processing your request' });
     }
   }
 );
