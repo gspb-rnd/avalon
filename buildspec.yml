@@ -3,6 +3,7 @@ phases:
   install:
     runtime-versions:
       java: corretto17
+      nodejs: 16
     commands:
       - echo Installing Maven 3.2.5...
       - wget https://archive.apache.org/dist/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.tar.gz
@@ -10,6 +11,7 @@ phases:
       - export PATH=$(pwd)/apache-maven-3.2.5/bin:$PATH
       - echo "export PATH=$(pwd)/apache-maven-3.2.5/bin:$PATH" >> ~/.bashrc
       - mvn --version
+      - npm install -g yarn
   pre_build:
     commands:
       - echo Skipping Docker Hub login as we are using ECR Public Gallery images...
@@ -20,9 +22,11 @@ phases:
       - echo Maven version $(mvn --version)
       - export MAVEN_OPTS="-Dmaven.test.skip=true -Dmaven.repo.local=$PWD/.m2/repository"
       - mvn -B -Dmaven.test.skip=true clean install
+      - cd ..
   build:
     commands:
       - echo Building the backend services...
+      - cd backend
       - cd service-registry && mvn clean package -DskipTests && cd ..
       - cd api-gateway && mvn clean package -DskipTests && cd ..
       - cd client-service && mvn clean package -DskipTests && cd ..
@@ -43,6 +47,15 @@ phases:
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/avalon-loan-application-service:latest
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/avalon-document-service:latest
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/avalon-workflow-service:latest
+      - cd ..
+      - echo Building the frontend...
+      - cd frontend/shared-components
+      - yarn install
+      - yarn build
+      - cd ../advisor-portal
+      - yarn install
+      - yarn build
+      - cd ../..
   post_build:
     commands:
       - echo Creating deployment artifacts...
@@ -52,6 +65,10 @@ phases:
       - echo '[{"name":"LoanApplicationServiceContainer","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-loan-application-service:latest"}]' > loan-application-service-imageDefinitions.json
       - echo '[{"name":"DocumentServiceContainer","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-document-service:latest"}]' > document-service-imageDefinitions.json
       - echo '[{"name":"WorkflowServiceContainer","imageUri":"'$AWS_ACCOUNT_ID'.dkr.ecr.'$AWS_REGION'.amazonaws.com/avalon-workflow-service:latest"}]' > workflow-service-imageDefinitions.json
+      - echo Syncing frontend build to S3...
+      - aws s3 sync frontend/advisor-portal/build/ s3://${FRONTEND_BUCKET_NAME}/ --delete
+      - echo Invalidating CloudFront cache...
+      - aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --paths "/*"
 artifacts:
   files:
     - service-registry-imageDefinitions.json

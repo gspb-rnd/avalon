@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_URL = 'https://d2kbjdljdoxcy0.cloudfront.net/api';
+const API_URL = 'http://Avalon-Avalo-xnqKtQR5AFrc-327551526.us-east-1.elb.amazonaws.com';
 
 const mockLoanApplications = [
   {
